@@ -6,28 +6,17 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import { CoreStart, AppMountParams } from 'src/core/public';
 import { ClientConfigType } from '../plugin';
 
-import { AppSearch } from './app_search';
+import { App } from './app';
 
 export const renderApp = (core: CoreStart, params: AppMountParams, config: ClientConfigType) => {
   ReactDOM.render(
     <BrowserRouter basename={params.appBasePath}>
-      <Route exact path="/">
-        {/* This will eventually contain an Enterprise Search landing page,
-        and we'll also actually have a /workplace_search route */}
-        <Redirect to="/app_search" />
-      </Route>
-      <Route path="/app_search">
-        <AppSearch
-          http={core.http}
-          appSearchUrl={config.host}
-          setBreadcrumbs={core.chrome.setBreadcrumbs}
-        />
-      </Route>
+      <App core={core} config={config} />
     </BrowserRouter>,
     params.element
   );
