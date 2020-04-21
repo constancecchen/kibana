@@ -11,6 +11,10 @@ import { coreMock } from 'src/core/public/mocks';
 import { mountWithIntl } from 'test_utils/enzyme_helpers';
 import { App } from './app';
 
+jest.mock('../applications/app_search', () => ({
+  AppSearch: () => <div>App Search Mock</div>,
+}));
+
 describe('App', () => {
   let params;
   let core;
@@ -30,13 +34,25 @@ describe('App', () => {
     const subject = () =>
       mountWithIntl(
         <MemoryRouter initialEntries={[route]}>
-          <App core={core} params={params} config={{}} />
+          <App
+            core={core}
+            params={params}
+            config={{
+              host: 'http://localhost:3002',
+            }}
+          />
         </MemoryRouter>
       );
 
     const itShouldMountAppSearch = () => {
       it('should mount AppSearch', () => {
-        expect(subject().find('AppSearch')).toHaveLength(1);
+        const AppSearch = subject().find('AppSearch');
+        expect(AppSearch).toHaveLength(1);
+
+        const props = AppSearch.props();
+        expect(props.http).toBe(core.http);
+        expect(props.appSearchUrl).toBe('http://localhost:3002');
+        expect(props.setBreadcrumbs).toBe(core.chrome.setBreadcrumbs);
       });
     };
 
