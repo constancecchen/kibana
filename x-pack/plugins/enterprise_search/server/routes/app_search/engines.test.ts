@@ -5,9 +5,9 @@
  */
 
 import { RequestHandlerContext } from 'kibana/server';
-import { mockRouter, RouterMock } from '../../../../../../src/core/server/http/router/router.mock';
-import { httpServerMock } from '../../../../../../src/core/server/http/http_server.mocks';
-import { RouteValidatorConfig } from '../../../../../../src/core/server/http/router/validator';
+import { mockRouter, RouterMock } from 'src/core/server/http/router/router.mock';
+import { httpServerMock } from 'src/core/server/http/http_server.mocks';
+import { RouteValidatorConfig } from 'src/core/server/http/router/validator';
 
 import { registerEnginesRoute } from './engines';
 import { ObjectType } from '@kbn/config-schema';
@@ -19,68 +19,9 @@ const fetchMock = require('node-fetch') as jest.Mocked<typeof fetch>;
 
 describe('engine routes', () => {
   describe('GET /api/app_search/engines', () => {
-    const APP_SEARCH_HOST_CONFIG = 'http://localhost:3002';
     const AUTH_HEADER = 'Basic 123';
-    const PAGE_INDEX = 1;
-    const TYPE = 'indexed';
-
     let router: RouterMock;
     const mockResponseFactory = httpServerMock.createResponseFactory();
-
-    const AppSearchAPI = {
-      shouldBeCalledWith(expectedUrl: string, expectedParams: object) {
-        return {
-          andReturnRedirect() {
-            fetchMock.mockImplementation((url: string, params: object) => {
-              expect(url).toEqual(expectedUrl);
-              expect(params).toEqual(expectedParams);
-
-              return Promise.resolve(
-                new Response('{}', {
-                  url: '/login',
-                })
-              );
-            });
-          },
-          andReturn(response: object) {
-            fetchMock.mockImplementation((url: string, params: object) => {
-              expect(url).toEqual(expectedUrl);
-              expect(params).toEqual(expectedParams);
-
-              return Promise.resolve(new Response(JSON.stringify(response)));
-            });
-          },
-        };
-      },
-    };
-
-    function expectResponseToBe200With(response: object) {
-      expect(mockResponseFactory.ok).toHaveBeenCalledWith(response);
-    }
-
-    async function callThisRoute(
-      request = {
-        headers: {
-          authorization: AUTH_HEADER,
-        },
-        query: {
-          type: TYPE,
-          pageIndex: PAGE_INDEX,
-        },
-      }
-    ) {
-      const [_, handler] = router.get.mock.calls[0];
-
-      const context = {} as jest.Mocked<RequestHandlerContext>;
-      await handler(context, httpServerMock.createKibanaRequest(request), mockResponseFactory);
-    }
-
-    function executeRouteValidation(data: { query: object }) {
-      const [config] = router.get.mock.calls[0];
-      const validate = config.validate as RouteValidatorConfig<{}, {}, {}>;
-      const query = validate.query as ObjectType;
-      query.validate(data.query);
-    }
 
     beforeEach(() => {
       jest.resetAllMocks();
@@ -88,28 +29,26 @@ describe('engine routes', () => {
       registerEnginesRoute({
         router,
         config: {
-          host: APP_SEARCH_HOST_CONFIG,
+          host: 'http://localhost:3002',
         },
       });
     });
 
     describe('when the underlying App Search API returns a 200', () => {
-      const appSearchEnginesResponse = { name: 'engine1' };
-
       beforeEach(() => {
         AppSearchAPI.shouldBeCalledWith(
-          `${APP_SEARCH_HOST_CONFIG}/as/engines/collection?type=${TYPE}&page[current]=${PAGE_INDEX}&page[size]=10`,
+          `http://localhost:3002/as/engines/collection?type=indexed&page[current]=1&page[size]=10`,
           {
             headers: { Authorization: AUTH_HEADER },
           }
-        ).andReturn(appSearchEnginesResponse);
+        ).andReturn({ name: 'engine1' });
       });
 
       it('should return 200 with a list of engines from the App Search API', async () => {
         await callThisRoute();
 
         expectResponseToBe200With({
-          body: appSearchEnginesResponse,
+          body: { name: 'engine1' },
           headers: { 'content-type': 'application/json' },
         });
       });
@@ -118,7 +57,7 @@ describe('engine routes', () => {
     describe('when the underlying App Search API redirects to /login', () => {
       beforeEach(() => {
         AppSearchAPI.shouldBeCalledWith(
-          `${APP_SEARCH_HOST_CONFIG}/as/engines/collection?type=${TYPE}&page[current]=${PAGE_INDEX}&page[size]=10`,
+          `http://localhost:3002/as/engines/collection?type=indexed&page[current]=1&page[size]=10`,
           {
             headers: { Authorization: AUTH_HEADER },
           }
@@ -173,5 +112,60 @@ describe('engine routes', () => {
         itShouldThrow(request);
       });
     });
+
+    const AppSearchAPI = {
+      shouldBeCalledWith(expectedUrl: string, expectedParams: object) {
+        return {
+          andReturnRedirect() {
+            fetchMock.mockImplementation((url: string, params: object) => {
+              expect(url).toEqual(expectedUrl);
+              expect(params).toEqual(expectedParams);
+
+              return Promise.resolve(
+                new Response('{}', {
+                  url: '/login',
+                })
+              );
+            });
+          },
+          andReturn(response: object) {
+            fetchMock.mockImplementation((url: string, params: object) => {
+              expect(url).toEqual(expectedUrl);
+              expect(params).toEqual(expectedParams);
+
+              return Promise.resolve(new Response(JSON.stringify(response)));
+            });
+          },
+        };
+      },
+    };
+
+    const expectResponseToBe200With = (response: object) => {
+      expect(mockResponseFactory.ok).toHaveBeenCalledWith(response);
+    };
+
+    const callThisRoute = async (
+      request = {
+        headers: {
+          authorization: AUTH_HEADER,
+        },
+        query: {
+          type: 'indexed',
+          pageIndex: 1,
+        },
+      }
+    ) => {
+      const [_, handler] = router.get.mock.calls[0];
+
+      const context = {} as jest.Mocked<RequestHandlerContext>;
+      await handler(context, httpServerMock.createKibanaRequest(request), mockResponseFactory);
+    };
+
+    const executeRouteValidation = (data: { query: object }) => {
+      const [config] = router.get.mock.calls[0];
+      const validate = config.validate as RouteValidatorConfig<{}, {}, {}>;
+      const query = validate.query as ObjectType;
+      query.validate(data.query);
+    };
   });
 });
