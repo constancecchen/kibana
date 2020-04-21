@@ -137,7 +137,7 @@ describe('engine routes', () => {
 
     describe('validation', () => {
       function itShouldValidate(request: { query: object }) {
-        it('should be validate', async () => {
+        it('should be validated', async () => {
           expect(() => executeRouteValidation(request)).not.toThrow();
         });
       }
