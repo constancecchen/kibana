@@ -12,7 +12,7 @@ jest.mock('../react_router_helpers', () => ({
 
 describe('appSearchBreadcrumbs', () => {
   const historyMock = {
-    createHref: jest.fn(),
+    createHref: jest.fn().mockImplementation(path => path.pathname),
     push: jest.fn(),
   };
 
@@ -36,22 +36,22 @@ describe('appSearchBreadcrumbs', () => {
   it('Builds a chain of breadcrumbs with Enterprise Search and App Search at the root', () => {
     expect(subject()).toEqual([
       {
-        href: undefined,
+        href: '/',
         onClick: expect.any(Function),
         text: 'Enterprise Search',
       },
       {
-        href: undefined,
+        href: '/app_search',
         onClick: expect.any(Function),
         text: 'App Search',
       },
       {
-        href: undefined,
+        href: '/page1',
         onClick: expect.any(Function),
         text: 'Page 1',
       },
       {
-        href: undefined,
+        href: '/page2',
         onClick: expect.any(Function),
         text: 'Page 2',
       },
