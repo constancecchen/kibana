@@ -15,6 +15,7 @@ export const mountWithKibanaContext = (node, contextProps) => {
       value={{
         http: {},
         setBreadcrumbs: jest.fn(),
+        enterpriseSearchUrl: 'http://localhost:3002',
         ...contextProps,
       }}
     >

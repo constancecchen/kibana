@@ -36,7 +36,9 @@ describe('EngineOverviewHeader', () => {
     let wrapper;
 
     beforeEach(() => {
-      wrapper = mountWithKibanaContext(<EngineOverviewHeader />, {});
+      wrapper = mountWithKibanaContext(<EngineOverviewHeader />, {
+        enterpriseSearchUrl: undefined,
+      });
     });
 
     describe('the Launch App Search button', () => {
