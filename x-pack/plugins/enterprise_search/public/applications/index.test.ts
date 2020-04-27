@@ -5,7 +5,7 @@
  */
 
 import { coreMock } from 'src/core/public/mocks';
-import { renderApp } from './applications';
+import { renderApp } from '../applications';
 
 describe('renderApp', () => {
   it('mounts and unmounts UI', () => {

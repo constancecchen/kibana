@@ -5,8 +5,9 @@
  */
 
 import React from 'react';
+
 import { SetAppSearchBreadcrumbs } from '../kibana_breadcrumbs';
-import { mount } from 'enzyme';
+import { mountWithKibanaContext } from '../../test_utils/helpers';
 
 jest.mock('./generate_breadcrumbs', () => ({
   appSearchBreadcrumbs: jest.fn(),
@@ -36,22 +37,16 @@ describe('SetAppSearchBreadcrumbs', () => {
     jest.clearAllMocks();
   });
 
-  const render = props => {
-    return mount(
-      <KibanaContext.Provider
-        value={{
-          http: {},
-          enterpriseSearchUrl: 'http://localhost:3002',
-          setBreadcrumbs,
-        }}
-      >
-        <SetAppSearchBreadcrumbs {...props} />
-      </KibanaContext.Provider>
-    );
+  const mountSetAppSearchBreadcrumbs = props => {
+    return mountWithKibanaContext(<SetAppSearchBreadcrumbs {...props} />, {
+      http: {},
+      enterpriseSearchUrl: 'http://localhost:3002',
+      setBreadcrumbs,
+    });
   };
 
   describe('when isRoot is false', () => {
-    const subject = () => render({ text: 'Page 1', isRoot: false });
+    const subject = () => mountSetAppSearchBreadcrumbs({ text: 'Page 1', isRoot: false });
 
     it('calls appSearchBreadcrumbs to build breadcrumbs, then registers them with Kibana', () => {
       subject();
@@ -67,7 +62,7 @@ describe('SetAppSearchBreadcrumbs', () => {
   });
 
   describe('when isRoot is true', () => {
-    const subject = () => render({ text: 'Page 1', isRoot: true });
+    const subject = () => mountSetAppSearchBreadcrumbs({ text: 'Page 1', isRoot: true });
 
     it('calls appSearchBreadcrumbs to build breadcrumbs with an empty breadcrumb, then registers them with Kibana', () => {
       subject();

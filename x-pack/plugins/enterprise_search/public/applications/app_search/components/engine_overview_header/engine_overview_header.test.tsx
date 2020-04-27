@@ -5,38 +5,18 @@
  */
 
 import React from 'react';
-import { mount } from 'enzyme';
 
 import { EngineOverviewHeader } from '../engine_overview_header';
-import { KibanaContext } from '../../..';
+import { mountWithKibanaContext } from '../../../test_utils/helpers';
 
 describe('EngineOverviewHeader', () => {
-  let enterpriseSearchUrl;
-
-  afterEach(() => {
-    enterpriseSearchUrl = undefined;
-  });
-
-  const render = () => {
-    return mount(
-      <KibanaContext.Provider
-        value={{
-          http: {},
-          enterpriseSearchUrl,
-          setBreadcrumbs: jest.fn(),
-        }}
-      >
-        <EngineOverviewHeader />
-      </KibanaContext.Provider>
-    );
-  };
-
   describe('when enterpriseSearchUrl is set', () => {
     let wrapper;
 
     beforeEach(() => {
-      enterpriseSearchUrl = 'http://localhost:3002';
-      wrapper = render();
+      wrapper = mountWithKibanaContext(<EngineOverviewHeader />, {
+        enterpriseSearchUrl: 'http://localhost:3002',
+      });
     });
 
     describe('the Launch App Search button', () => {
@@ -56,8 +36,7 @@ describe('EngineOverviewHeader', () => {
     let wrapper;
 
     beforeEach(() => {
-      enterpriseSearchUrl = undefined;
-      wrapper = render();
+      wrapper = mountWithKibanaContext(<EngineOverviewHeader />, {});
     });
 
     describe('the Launch App Search button', () => {

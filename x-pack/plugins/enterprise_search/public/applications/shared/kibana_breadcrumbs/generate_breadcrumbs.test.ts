@@ -73,12 +73,12 @@ describe('appSearchBreadcrumbs', () => {
       expect(historyMock.push).toHaveBeenCalledWith('/app_search');
     });
 
-    it('has a link to our custom page third', () => {
+    it('has a link to page 1 third', () => {
       subject()[2].onClick(eventMock);
       expect(historyMock.push).toHaveBeenCalledWith('/page1');
     });
 
-    it('has a link to our second custom page last', () => {
+    it('has a link to page 2 last', () => {
       subject()[3].onClick(eventMock);
       expect(historyMock.push).toHaveBeenCalledWith('/page2');
     });
@@ -138,12 +138,12 @@ describe('enterpriseSearchBreadcrumbs', () => {
       expect(historyMock.push).toHaveBeenCalledWith('/');
     });
 
-    it('has a link to our custom page third', () => {
+    it('has a link to page 1 second', () => {
       subject()[1].onClick(eventMock);
       expect(historyMock.push).toHaveBeenCalledWith('/page1');
     });
 
-    it('has a link to our second custom page last', () => {
+    it('has a link to page 2 last', () => {
       subject()[2].onClick(eventMock);
       expect(historyMock.push).toHaveBeenCalledWith('/page2');
     });
