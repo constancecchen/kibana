@@ -31,7 +31,7 @@ export class EnterpriseSearchPlugin implements Plugin {
   private config: ClientConfigType;
 
   constructor(private readonly initializerContext: PluginInitializerContext) {
-    this.config = this.initializerContext.config.get<ClientConfigType>();
+    this.config = initializerContext.config.get<ClientConfigType>();
   }
 
   public setup(core: CoreSetup, plugins: PluginsSetup) {
