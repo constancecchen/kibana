@@ -15,7 +15,7 @@ export const EngineOverviewHeader: React.FC<> = () => {
   const buttonProps = {
     fill: true,
     iconType: 'popout',
-    ['data-test-subj']: 'launch_button',
+    ['data-test-subj']: 'launchButton',
   };
   if (enterpriseSearchUrl) {
     buttonProps.href = `${enterpriseSearchUrl}/as`;

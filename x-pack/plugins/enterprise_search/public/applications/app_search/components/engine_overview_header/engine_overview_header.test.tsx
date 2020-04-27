@@ -20,7 +20,7 @@ describe('EngineOverviewHeader', () => {
     });
 
     describe('the Launch App Search button', () => {
-      const subject = () => wrapper.find('EuiButton[data-test-subj="launch_button"]');
+      const subject = () => wrapper.find('EuiButton[data-test-subj="launchButton"]');
 
       it('should not be disabled', () => {
         expect(subject().props().isDisabled).toBeFalsy();
@@ -40,7 +40,7 @@ describe('EngineOverviewHeader', () => {
     });
 
     describe('the Launch App Search button', () => {
-      const subject = () => wrapper.find('EuiButton[data-test-subj="launch_button"]');
+      const subject = () => wrapper.find('EuiButton[data-test-subj="launchButton"]');
 
       it('should be disabled', () => {
         expect(subject().props().isDisabled).toBe(true);
