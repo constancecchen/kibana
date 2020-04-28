@@ -24,7 +24,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-
 describe('SetAppSearchBreadcrumbs', () => {
   const setBreadcrumbs = jest.fn();
   const builtBreadcrumbs = [];

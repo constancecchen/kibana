@@ -4,15 +4,59 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { appSearchBreadcrumbs, enterpriseSearchBreadcrumbs } from '../kibana_breadcrumbs';
+import { generateBreadcrumb } from './generate_breadcrumbs';
+import { appSearchBreadcrumbs, enterpriseSearchBreadcrumbs } from './';
 
 jest.mock('../react_router_helpers', () => ({
-  letBrowserHandleEvent: () => false,
+  letBrowserHandleEvent: jest.fn(() => false),
 }));
+import { letBrowserHandleEvent } from '../react_router_helpers';
+
+describe('generateBreadcrumb', () => {
+  const historyMock = {
+    createHref: ({ pathname }) => `/foo/bar${pathname}`,
+    push: jest.fn(),
+  };
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it("creates a breadcrumb object matching EUI's breadcrumb type", () => {
+    const breadcrumb = generateBreadcrumb({
+      text: 'Hello World',
+      path: '/baz',
+      history: historyMock,
+    });
+    expect(breadcrumb).toEqual({
+      text: 'Hello World',
+      href: '/foo/bar/baz',
+      onClick: expect.any(Function),
+    });
+  });
+
+  it('prevents default navigation and uses React Router history on click', () => {
+    const breadcrumb = generateBreadcrumb({ text: '', path: '/', history: historyMock });
+    const event = { preventDefault: jest.fn() };
+    breadcrumb.onClick(event);
+
+    expect(historyMock.push).toHaveBeenCalled();
+    expect(event.preventDefault).toHaveBeenCalled();
+  });
+
+  it('does not prevents default browser behavior on new tab/window clicks', () => {
+    const breadcrumb = generateBreadcrumb({ text: '', path: '/', history: historyMock });
+
+    letBrowserHandleEvent.mockImplementationOnce(() => true);
+    breadcrumb.onClick();
+
+    expect(historyMock.push).not.toHaveBeenCalled();
+  });
+});
 
 describe('appSearchBreadcrumbs', () => {
   const historyMock = {
-    createHref: jest.fn().mockImplementation(path => path.pathname),
+    createHref: jest.fn(path => path.pathname),
     push: jest.fn(),
   };
 
