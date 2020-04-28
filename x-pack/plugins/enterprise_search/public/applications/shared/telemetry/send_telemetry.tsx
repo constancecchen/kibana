@@ -23,15 +23,15 @@ interface ISendTelemetry extends ISendTelemetryProps {
  * Base function - useful for non-component actions, e.g. clicks
  */
 
-export const sendTelemetry = ({ http, product, action, metric }: ISendTelemetry) => {
-  return http
-    .put(`/api/${product}/telemetry`, {
+export const sendTelemetry = async ({ http, product, action, metric }: ISendTelemetry) => {
+  try {
+    await http.put(`/api/${product}/telemetry`, {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ action, metric }),
-    })
-    .catch(error => {
-      throw new Error('Unable to send telemetry');
     });
+  } catch (error) {
+    throw new Error('Unable to send telemetry');
+  }
 };
 
 /**

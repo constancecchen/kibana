@@ -7,14 +7,19 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { sendTelemetry, SendAppSearchTelemetry } from './';
+import { httpServiceMock } from 'src/core/public/mocks';
 import { mountWithKibanaContext } from '../../test_utils/helpers';
+import { sendTelemetry, SendAppSearchTelemetry } from './';
 
 describe('Shared Telemetry Helpers', () => {
+  const httpMock = httpServiceMock.createSetupContract();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('sendTelemetry', () => {
     it('successfully calls the server-side telemetry endpoint', () => {
-      const httpMock = { put: jest.fn(() => Promise.resolve()) };
-
       sendTelemetry({
         http: httpMock,
         product: 'enterprise_search',
@@ -29,19 +34,13 @@ describe('Shared Telemetry Helpers', () => {
     });
 
     it('throws an error if the telemetry endpoint fails', () => {
-      const httpMock = { put: jest.fn(() => Promise.reject()) };
+      const httpRejectMock = { put: () => Promise.reject() };
 
-      expect(sendTelemetry({ http: httpMock })).rejects.toThrow('Unable to send telemetry');
+      expect(sendTelemetry({ http: httpRejectMock })).rejects.toThrow('Unable to send telemetry');
     });
   });
 
   describe('React component helpers', () => {
-    const httpMock = { put: jest.fn(() => Promise.resolve()) };
-
-    beforeEach(() => {
-      jest.clearAllMocks();
-    });
-
     it('SendAppSearchTelemetry component', () => {
       const wrapper = mountWithKibanaContext(
         <SendAppSearchTelemetry action="clicked" metric="button" />,
