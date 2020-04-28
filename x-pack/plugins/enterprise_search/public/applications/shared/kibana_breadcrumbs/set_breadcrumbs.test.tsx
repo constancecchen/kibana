@@ -24,7 +24,6 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
-import { KibanaContext } from '../..';
 
 describe('SetAppSearchBreadcrumbs', () => {
   const setBreadcrumbs = jest.fn();
