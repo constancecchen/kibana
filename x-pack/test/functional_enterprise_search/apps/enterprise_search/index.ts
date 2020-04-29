@@ -8,6 +8,6 @@ import { FtrProviderContext } from '../../ftr_provider_context';
 
 export default function({ loadTestFile }: FtrProviderContext) {
   describe('Enterprise Search', function() {
-    loadTestFile(require.resolve('./setup_guide'));
+    loadTestFile(require.resolve('./app_search/engines'));
   });
 }

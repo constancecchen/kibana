@@ -13,6 +13,8 @@ export default function upgradeAssistantFunctionalTests({
 }: FtrProviderContext) {
   const esArchiver = getService('esArchiver');
   const browser = getService('browser');
+  const retry = getService('retry');
+
   const PageObjects = getPageObjects(['enterpriseSearch']);
 
   describe('Setup Guide', function() {
@@ -25,8 +27,10 @@ export default function upgradeAssistantFunctionalTests({
     describe('when no enterpriseSearch host is configured', () => {
       it('navigating to the enterprise_search plugin will redirect a user to the setup guide', async () => {
         await PageObjects.enterpriseSearch.navigateToPage();
-        const currentUrl = await browser.getCurrentUrl();
-        expect(currentUrl).to.contain('/app_search/setup_guide');
+        await retry.try(async function() {
+          const currentUrl = await browser.getCurrentUrl();
+          expect(currentUrl).to.contain('/app_search');
+        });
       });
     });
   });
