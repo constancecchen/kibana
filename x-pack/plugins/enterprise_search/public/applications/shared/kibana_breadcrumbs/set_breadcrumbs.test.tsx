@@ -7,7 +7,7 @@
 import React from 'react';
 
 import { SetAppSearchBreadcrumbs } from '../kibana_breadcrumbs';
-import { mountWithKibanaContext } from '../../test_utils/helpers';
+import { mountWithKibanaContext } from '../../test_utils';
 
 jest.mock('./generate_breadcrumbs', () => ({
   appSearchBreadcrumbs: jest.fn(),

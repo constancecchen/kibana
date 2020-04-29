@@ -7,7 +7,7 @@
 import React from 'react';
 
 import { EngineOverviewHeader } from '../engine_overview_header';
-import { mountWithKibanaContext } from '../../../test_utils/helpers';
+import { mountWithKibanaContext } from '../../../test_utils';
 
 describe('EngineOverviewHeader', () => {
   describe('when enterpriseSearchUrl is set', () => {
