@@ -8,19 +8,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { EuiLink, EuiButton } from '@elastic/eui';
 
-jest.mock('react-router-dom', () => ({ useHistory: jest.fn() }));
-import { useHistory } from 'react-router-dom';
+import '../../test_utils/mock_rr_usehistory';
+import { mockHistory } from '../../test_utils';
 
 import { EuiReactRouterLink, EuiReactRouterButton } from './eui_link';
 
 describe('EUI & React Router Component Helpers', () => {
-  const historyPushMock = jest.fn();
-  const historycreateHrefMock = jest.fn(({ pathname }) => `/app_search${pathname}`);
-  useHistory.mockImplementation(() => ({
-    push: historyPushMock,
-    createHref: historycreateHrefMock,
-  }));
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -52,8 +45,8 @@ describe('EUI & React Router Component Helpers', () => {
     const link = wrapper.find(EuiLink);
 
     expect(link.prop('onClick')).toBeInstanceOf(Function);
-    expect(link.prop('href')).toEqual('/app_search/foo/bar');
-    expect(historycreateHrefMock).toHaveBeenCalled();
+    expect(link.prop('href')).toEqual('/enterprise_search/foo/bar');
+    expect(mockHistory.createHref).toHaveBeenCalled();
   });
 
   describe('onClick', () => {
@@ -68,7 +61,7 @@ describe('EUI & React Router Component Helpers', () => {
       wrapper.find(EuiLink).simulate('click', simulatedEvent);
 
       expect(simulatedEvent.preventDefault).toHaveBeenCalled();
-      expect(historyPushMock).toHaveBeenCalled();
+      expect(mockHistory.push).toHaveBeenCalled();
     });
 
     it('does not prevent default browser behavior on new tab/window clicks', () => {
@@ -80,7 +73,7 @@ describe('EUI & React Router Component Helpers', () => {
       };
       wrapper.find(EuiLink).simulate('click', simulatedEvent);
 
-      expect(historyPushMock).not.toHaveBeenCalled();
+      expect(mockHistory.push).not.toHaveBeenCalled();
     });
   });
 });

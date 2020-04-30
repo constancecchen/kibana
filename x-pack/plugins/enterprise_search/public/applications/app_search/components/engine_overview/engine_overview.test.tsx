@@ -4,19 +4,11 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
+import '../../../test_utils/mock_rr_usehistory';
+
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render } from 'enzyme';
-
-jest.mock('react-router-dom', () => ({
-  useHistory: () => ({
-    createHref: jest.fn(),
-    push: jest.fn(),
-    location: {
-      pathname: '/current-path',
-    },
-  }),
-}));
 
 import { KibanaContext } from '../../../';
 import { mountWithKibanaContext, mockKibanaContext } from '../../../test_utils';
