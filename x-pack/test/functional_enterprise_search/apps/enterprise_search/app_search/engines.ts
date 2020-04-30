@@ -7,7 +7,7 @@
 import expect from '@kbn/expect';
 import { FtrProviderContext } from '../../../ftr_provider_context';
 
-export default function upgradeAssistantFunctionalTests({
+export default function enterpriseSearchSetupEnginesTests({
   getService,
   getPageObjects,
 }: FtrProviderContext) {
@@ -17,14 +17,14 @@ export default function upgradeAssistantFunctionalTests({
 
   const PageObjects = getPageObjects(['enterpriseSearch']);
 
-  describe('Setup Guide', function() {
+  describe('Engines Overview', function() {
     this.tags('smoke');
     before(async () => await esArchiver.load('empty_kibana'));
     after(async () => {
       await esArchiver.unload('empty_kibana');
     });
 
-    describe('when no enterpriseSearch host is configured', () => {
+    describe('when an enterpriseSearch host is configured', () => {
       it('navigating to the enterprise_search plugin will redirect a user to the setup guide', async () => {
         await PageObjects.enterpriseSearch.navigateToPage();
         await retry.try(async function() {
