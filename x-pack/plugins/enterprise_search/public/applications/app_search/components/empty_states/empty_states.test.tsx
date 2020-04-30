@@ -8,7 +8,10 @@ import '../../../test_utils/mock_shallow_usecontext';
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import { EuiEmptyPrompt, EuiLoadingContent } from '@elastic/eui';
+import { EuiEmptyPrompt, EuiCode, EuiLoadingContent } from '@elastic/eui';
+
+jest.mock('../../utils/get_username', () => ({ getUserName: jest.fn() }));
+import { getUserName } from '../../utils/get_username';
 
 import { ErrorState, NoUserState, EmptyState, LoadingState } from './';
 
@@ -29,6 +32,14 @@ describe('NoUserState', () => {
 
     expect(prompt).toHaveLength(1);
     expect(prompt.prop('title')).toEqual(<h2>Cannot find App Search account</h2>);
+  });
+
+  it('renders with username', () => {
+    getUserName.mockImplementationOnce(() => 'dolores-abernathy');
+    const wrapper = shallow(<NoUserState />);
+    const prompt = wrapper.find(EuiEmptyPrompt).dive();
+
+    expect(prompt.find(EuiCode).prop('children')).toContain('dolores-abernathy');
   });
 });
 
