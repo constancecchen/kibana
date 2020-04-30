@@ -6,22 +6,24 @@
 
 import { resolve } from 'path';
 import { FtrConfigProviderContext } from '@kbn/test/types/ftr';
-import { pageObjects } from '../functional/page_objects';
 
 export default async function({ readConfigFile }: FtrConfigProviderContext) {
-  const xpackFunctionalConfig = await readConfigFile(require.resolve('../functional/config.js'));
+  const baseConfig = await readConfigFile(require.resolve('./base_config'));
 
   return {
-    ...xpackFunctionalConfig.getAll(),
-    pageObjects,
-    testFiles: [resolve(__dirname, './apps/enterprise_search')],
+    // default to the xpack functional config
+    ...baseConfig.getAll(),
+
+    testFiles: [resolve(__dirname, './apps/enterprise_search/with_host_configured')],
+
     junit: {
-      reportName: 'X-Pack Enterprise Search Functional Tests',
+      reportName: 'X-Pack Enterprise Search Functional Tests with Host Configured',
     },
+
     kbnTestServer: {
-      ...xpackFunctionalConfig.get('kbnTestServer'),
+      ...baseConfig.get('kbnTestServer'),
       serverArgs: [
-        ...xpackFunctionalConfig.get('kbnTestServer.serverArgs'),
+        ...baseConfig.get('kbnTestServer.serverArgs'),
         '--enterpriseSearch.host=http://localhost:3002',
       ],
     },

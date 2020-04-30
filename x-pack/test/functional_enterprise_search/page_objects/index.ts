@@ -4,10 +4,5 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import { FtrProviderContext } from '../../ftr_provider_context';
-
-export default function({ loadTestFile }: FtrProviderContext) {
-  describe('Enterprise Search', function() {
-    loadTestFile(require.resolve('./setup_guide'));
-  });
-}
+export * from '../../functional/page_objects';
+export { EnterpriseSearchPageProvider } from './enterprise_search';
