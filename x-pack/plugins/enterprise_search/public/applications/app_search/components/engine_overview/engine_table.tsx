@@ -23,6 +23,11 @@ interface IEngineTableProps {
     onPaginate(pageIndex: number);
   };
 }
+interface IOnChange {
+  page: {
+    index: number;
+  };
+}
 
 export const EngineTable: ReactFC<IEngineTableProps> = ({
   data,
@@ -102,7 +107,7 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
         totalItemCount: totalEngines,
         hidePerPageOptions: true,
       }}
-      onChange={({ page = {} }) => {
+      onChange={({ page }): IOnChange => {
         const { index } = page;
         onPaginate(index + 1); // Note on paging - App Search's API pages start at 1, EuiBasicTables' pages start at 0
       }}

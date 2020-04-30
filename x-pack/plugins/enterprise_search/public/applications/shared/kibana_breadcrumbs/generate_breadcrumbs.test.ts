@@ -92,6 +92,21 @@ describe('appSearchBreadcrumbs', () => {
     ]);
   });
 
+  it('shows just the root if breadcrumbs is empty', () => {
+    expect(appSearchBreadcrumbs(mockHistory)()).toEqual([
+      {
+        href: '/enterprise_search/',
+        onClick: expect.any(Function),
+        text: 'Enterprise Search',
+      },
+      {
+        href: '/enterprise_search/app_search',
+        onClick: expect.any(Function),
+        text: 'App Search',
+      },
+    ]);
+  });
+
   describe('links', () => {
     const eventMock = {
       preventDefault: jest.fn(),
@@ -153,6 +168,16 @@ describe('enterpriseSearchBreadcrumbs', () => {
         href: '/enterprise_search/page2',
         onClick: expect.any(Function),
         text: 'Page 2',
+      },
+    ]);
+  });
+
+  it('shows just the root if breadcrumbs is empty', () => {
+    expect(enterpriseSearchBreadcrumbs(mockHistory)()).toEqual([
+      {
+        href: '/enterprise_search/',
+        onClick: expect.any(Function),
+        text: 'Enterprise Search',
       },
     ]);
   });

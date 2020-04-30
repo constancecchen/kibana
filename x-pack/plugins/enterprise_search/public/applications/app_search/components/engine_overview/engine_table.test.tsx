@@ -69,4 +69,12 @@ describe('EngineTable', () => {
 
     expect(onPaginate).toHaveBeenCalledWith(5);
   });
+
+  it('handles empty data', () => {
+    const emptyWrapper = mountWithKibanaContext(
+      <EngineTable data={[]} pagination={{ totalEngines: 0 }} />
+    );
+    const emptyTable = wrapper.find(EuiBasicTable);
+    expect(emptyTable.prop('pagination').pageIndex).toEqual(0);
+  });
 });
