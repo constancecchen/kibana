@@ -79,16 +79,14 @@ export const EngineOverview: ReactFC<> = () => {
     const callbacks = { setResults: setEngines, setResultsTotal: setEnginesTotal };
 
     setEnginesData(params, callbacks);
-  }, [enginesPage]); // eslint-disable-line
-  // TODO: https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies
+  }, [enginesPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const params = { type: 'meta', pageIndex: metaEnginesPage };
     const callbacks = { setResults: setMetaEngines, setResultsTotal: setMetaEnginesTotal };
 
     setEnginesData(params, callbacks);
-  }, [metaEnginesPage]); // eslint-disable-line
-  // TODO: https://reactjs.org/docs/hooks-faq.html#is-it-safe-to-omit-functions-from-the-list-of-dependencies
+  }, [metaEnginesPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (hasErrorConnecting) return <ErrorState />;
   if (hasNoAccount) return <NoUserState />;
