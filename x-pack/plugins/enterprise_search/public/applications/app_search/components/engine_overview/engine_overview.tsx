@@ -49,12 +49,8 @@ export const EngineOverview: ReactFC<> = () => {
   };
   const hasValidData = response => {
     return (
-      response &&
-      Array.isArray(response.results) &&
-      response.meta &&
-      response.meta.page &&
-      typeof response.meta.page.total_results === 'number'
-    ); // TODO: Move to optional chaining once Prettier has been updated to support it
+      Array.isArray(response?.results) && typeof response?.meta?.page?.total_results === 'number'
+    );
   };
   const hasNoAccountError = response => {
     return response && response.message === 'no-as-account';
