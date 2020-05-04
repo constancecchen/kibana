@@ -47,30 +47,20 @@ export const EngineOverview: ReactFC<> = () => {
       query: { type, pageIndex },
     });
   };
-  const hasValidData = response => {
-    return (
-      Array.isArray(response?.results) && typeof response?.meta?.page?.total_results === 'number'
-    );
-  };
-  const hasNoAccountError = response => {
-    return response && response.message === 'no-as-account';
-  };
   const setEnginesData = async (params, callbacks) => {
     try {
       const response = await getEnginesData(params);
-      if (!hasValidData(response)) {
-        if (hasNoAccountError(response)) {
-          return setHasNoAccount(true);
-        }
-        throw new Error('App Search engines response is missing valid data');
-      }
 
       callbacks.setResults(response.results);
       callbacks.setResultsTotal(response.meta.page.total_results);
+
       setIsLoading(false);
     } catch (error) {
-      // TODO - should we be logging errors to telemetry or elsewhere for debugging?
-      setHasErrorConnecting(true);
+      if (error?.body?.message === 'no-as-account') {
+        setHasNoAccount(true);
+      } else {
+        setHasErrorConnecting(true);
+      }
     }
   };
 
