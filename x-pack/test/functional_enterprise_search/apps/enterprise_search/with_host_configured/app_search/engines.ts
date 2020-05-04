@@ -6,6 +6,7 @@
 
 import expect from '@kbn/expect';
 import { FtrProviderContext } from '../../../ftr_provider_context';
+import { setup, tearDown } from '../../../../helpers';
 
 export default function enterpriseSearchSetupEnginesTests({
   getService,
@@ -19,13 +20,20 @@ export default function enterpriseSearchSetupEnginesTests({
 
   describe('Engines Overview', function() {
     this.tags('smoke');
-    before(async () => await esArchiver.load('empty_kibana'));
+    let fixtures;
+
+    before(async () => {
+      await esArchiver.load('empty_kibana');
+      fixtures = await setup();
+    });
+
     after(async () => {
       await esArchiver.unload('empty_kibana');
+      await tearDown(fixtures);
     });
 
     describe('when an enterpriseSearch host is configured', () => {
-      it('navigating to the enterprise_search plugin will redirect a user to the setup guide', async () => {
+      it('navigating to the enterprise_search plugin will redirect a user to the App Search root', async () => {
         await PageObjects.enterpriseSearch.navigateToPage();
         await retry.try(async function() {
           const currentUrl = await browser.getCurrentUrl();
