@@ -6,7 +6,7 @@
 
 import expect from '@kbn/expect';
 import { FtrProviderContext } from '../../../ftr_provider_context';
-import { setup, tearDown } from '../../../../helpers';
+import { AppSearchService, IEngine } from '../../../../services/app_search_service';
 
 export default function enterpriseSearchSetupEnginesTests({
   getService,
@@ -16,34 +16,35 @@ export default function enterpriseSearchSetupEnginesTests({
   const browser = getService('browser');
   const retry = getService('retry');
   const testSubjects = getService('testSubjects');
-  const security = getService('security');
+  const appSearch = getService('appSearch') as AppSearchService;
 
   const PageObjects = getPageObjects(['enterpriseSearch', 'security']);
 
   describe('Engines Overview', function() {
     this.tags('smoke');
-    let fixtures;
+    let engine1: IEngine;
+    let engine2: IEngine;
+    let metaEngine: IEngine;
 
     before(async () => {
       await esArchiver.load('empty_kibana');
-      fixtures = await setup();
+      engine1 = await appSearch.createEngine();
+      engine2 = await appSearch.createEngineWithDocs();
+      metaEngine = await appSearch.createMetaEngine([engine1.name, engine2.name]);
     });
 
     after(async () => {
       await esArchiver.unload('empty_kibana');
-      await tearDown(fixtures);
+      appSearch.destroyEngine(engine1.name);
+      appSearch.destroyEngine(engine2.name);
+      appSearch.destroyEngine(metaEngine.name);
     });
 
     describe('when an enterpriseSearch host is configured', () => {
       it('navigating to the enterprise_search plugin will redirect a user to the App Search Engines Overview page', async () => {
-        await security.user.create('enterprise_search', {
-          password: 'changeme',
-          roles: ['kibana_admin'],
-          full_name: 'enterprise_search',
-        });
-
         await PageObjects.security.forceLogout();
-        await PageObjects.security.login('enterprise_search', 'changeme', {
+        const { user, password } = appSearch.getEnterpriseSearchUser();
+        await PageObjects.security.login(user, password, {
           expectSpaceSelector: false,
         });
 
@@ -52,11 +53,6 @@ export default function enterpriseSearchSetupEnginesTests({
           const currentUrl = await browser.getCurrentUrl();
           expect(currentUrl).to.contain('/app_search');
         });
-        browser.getActions().pause(5000);
-      });
-
-      it('will list all engines', async () => {
-        const engineNameLinks = await testSubjects.find('engineNameLink');
       });
     });
   });

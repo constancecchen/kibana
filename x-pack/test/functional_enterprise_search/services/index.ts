@@ -4,7 +4,10 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-import sourceSetup from './setup';
+import { services as functionalServices } from '../../functional/services';
+import { AppSearchServiceProvider } from './app_search_service';
 
-export const setup = sourceSetup.setup;
-export const tearDown = sourceSetup.tearDown;
+export const services = {
+  ...functionalServices,
+  appSearch: AppSearchServiceProvider,
+};

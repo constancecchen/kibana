@@ -6,6 +6,7 @@
 
 import { FtrConfigProviderContext } from '@kbn/test/types/ftr';
 import { pageObjects } from './page_objects';
+import { services } from './services';
 
 export default async function({ readConfigFile }: FtrConfigProviderContext) {
   const xPackFunctionalConfig = await readConfigFile(require.resolve('../functional/config'));
@@ -13,6 +14,7 @@ export default async function({ readConfigFile }: FtrConfigProviderContext) {
   return {
     // default to the xpack functional config
     ...xPackFunctionalConfig.getAll(),
+    services,
     pageObjects,
   };
 }
