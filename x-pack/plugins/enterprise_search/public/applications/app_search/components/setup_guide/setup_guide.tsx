@@ -92,9 +92,9 @@ export const SetupGuide: React.FC<> = () => {
                 children: (
                   <EuiText>
                     <p>
-                      Within your <EuiCode>config/kibana.yml</EuiCode> file, add the following the
-                      host URL of your App Search instance as{' '}
-                      <EuiCode>enterpriseSearch.host</EuiCode>. For example:
+                      Within your <EuiCode>config/kibana.yml</EuiCode> file, set {' '}
+                      <EuiCode>enterpriseSearch.host</EuiCode> to the URL of your App Search instance.
+                      For example:
                     </p>
                     <EuiCodeBlock language="yml">
                       enterpriseSearch.host: &apos;http://localhost:3002&apos;
@@ -107,8 +107,7 @@ export const SetupGuide: React.FC<> = () => {
                 children: (
                   <EuiText>
                     <p>
-                      After updating your Kibana config file, restart Kibana to pick up your
-                      changes.
+                      Restart Kibana to pick up the configuration changes from the previous step.
                     </p>
                     <p>
                       If you’re using{' '}
@@ -130,15 +129,14 @@ export const SetupGuide: React.FC<> = () => {
                 children: (
                   <>
                     <EuiAccordion
-                      buttonContent="App Search is on a different Elasticsearch cluster than Kibana"
+                      buttonContent="App Search and Kibana are on different Elasticsearch clusters"
                       id="standard-auth"
                       paddingSize="s"
                     >
                       <EuiText>
                         <p>
-                          The plugin currently relies on App Search and Kibana sharing the same
-                          Elasticsearch cluster. If your App Search instance and Kibana instance are
-                          on different clusters, this plugin unfortunately will not work.
+                          This plugin does not currently support App Search and Kibana running on
+                          different clusters.
                         </p>
                       </EuiText>
                     </EuiAccordion>
@@ -150,8 +148,8 @@ export const SetupGuide: React.FC<> = () => {
                     >
                       <EuiText>
                         <p>
-                          The plugin does not currently support App Search operating on different
-                          authentication methods (for example, App Search being on a different SAML
+                          This plugin does not currently support App Search and Kibana operating on
+                          different authentication methods (for example, App Search using a different SAML
                           provider than Kibana).
                         </p>
                       </EuiText>
@@ -164,7 +162,7 @@ export const SetupGuide: React.FC<> = () => {
                     >
                       <EuiText>
                         <p>
-                          Unfortunately, App Search operating on{' '}
+                          App Search operating on{' '}
                           <EuiLink
                             href="https://swiftype.com/documentation/app-search/self-managed/security#standard"
                             target="_blank"
