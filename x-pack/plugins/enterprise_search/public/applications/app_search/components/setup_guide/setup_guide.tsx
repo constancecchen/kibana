@@ -92,9 +92,9 @@ export const SetupGuide: React.FC<> = () => {
                 children: (
                   <EuiText>
                     <p>
-                      Within your <EuiCode>config/kibana.yml</EuiCode> file, set {' '}
-                      <EuiCode>enterpriseSearch.host</EuiCode> to the URL of your App Search instance.
-                      For example:
+                      Within your <EuiCode>config/kibana.yml</EuiCode> file, set{' '}
+                      <EuiCode>enterpriseSearch.host</EuiCode> to the URL of your App Search
+                      instance. For example:
                     </p>
                     <EuiCodeBlock language="yml">
                       enterpriseSearch.host: &apos;http://localhost:3002&apos;
@@ -149,8 +149,8 @@ export const SetupGuide: React.FC<> = () => {
                       <EuiText>
                         <p>
                           This plugin does not currently support App Search and Kibana operating on
-                          different authentication methods (for example, App Search using a different SAML
-                          provider than Kibana).
+                          different authentication methods (for example, App Search using a
+                          different SAML provider than Kibana).
                         </p>
                       </EuiText>
                     </EuiAccordion>
