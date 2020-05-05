@@ -94,10 +94,10 @@ export const SetupGuide: React.FC<> = () => {
                     <p>
                       Within your <EuiCode>config/kibana.yml</EuiCode> file, add the following the
                       host URL of your App Search instance as{' '}
-                      <EuiCode>enterprise_search.host</EuiCode>. For example:
+                      <EuiCode>enterpriseSearch.host</EuiCode>. For example:
                     </p>
                     <EuiCodeBlock language="yml">
-                      enterprise_search.host: &apos;http://localhost:3002&apos;
+                      enterpriseSearch.host: &apos;http://localhost:3002&apos;
                     </EuiCodeBlock>
                   </EuiText>
                 ),
