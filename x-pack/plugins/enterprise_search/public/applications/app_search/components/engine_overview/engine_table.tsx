@@ -41,6 +41,7 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
   const engineLinkProps = name => ({
     href: `${enterpriseSearchUrl}/as/engines/${name}`,
     target: '_blank',
+    ['data-test-subj']: 'engineNameLink',
     onClick: () =>
       sendTelemetry({
         http,

@@ -15,8 +15,10 @@ export default function enterpriseSearchSetupEnginesTests({
   const esArchiver = getService('esArchiver');
   const browser = getService('browser');
   const retry = getService('retry');
+  const testSubjects = getService('testSubjects');
+  const security = getService('security');
 
-  const PageObjects = getPageObjects(['enterpriseSearch']);
+  const PageObjects = getPageObjects(['enterpriseSearch', 'security']);
 
   describe('Engines Overview', function() {
     this.tags('smoke');
@@ -33,12 +35,28 @@ export default function enterpriseSearchSetupEnginesTests({
     });
 
     describe('when an enterpriseSearch host is configured', () => {
-      it('navigating to the enterprise_search plugin will redirect a user to the App Search root', async () => {
+      it('navigating to the enterprise_search plugin will redirect a user to the App Search Engines Overview page', async () => {
+        await security.user.create('enterprise_search', {
+          password: 'changeme',
+          roles: ['kibana_admin'],
+          full_name: 'enterprise_search',
+        });
+
+        await PageObjects.security.forceLogout();
+        await PageObjects.security.login('enterprise_search', 'changeme', {
+          expectSpaceSelector: false,
+        });
+
         await PageObjects.enterpriseSearch.navigateToPage();
         await retry.try(async function() {
           const currentUrl = await browser.getCurrentUrl();
           expect(currentUrl).to.contain('/app_search');
         });
+        browser.getActions().pause(5000);
+      });
+
+      it('will list all engines', async () => {
+        const engineNameLinks = await testSubjects.find('engineNameLink');
       });
     });
   });
