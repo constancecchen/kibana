@@ -9,7 +9,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
 import { CoreStart, AppMountParams, HttpHandler } from 'src/core/public';
-import { ClientConfigType } from '../plugin';
+import { ClientConfigType, PluginsSetup } from '../plugin';
 import { TSetBreadcrumbs } from './shared/kibana_breadcrumbs';
 
 import { AppSearch } from './app_search';
@@ -22,7 +22,12 @@ export interface IKibanaContext {
 
 export const KibanaContext = React.createContext();
 
-export const renderApp = (core: CoreStart, params: AppMountParams, config: ClientConfigType) => {
+export const renderApp = (
+  core: CoreStart,
+  params: AppMountParams,
+  config: ClientConfigType,
+  plugins: PluginsSetup
+) => {
   ReactDOM.render(
     <KibanaContext.Provider
       value={{
