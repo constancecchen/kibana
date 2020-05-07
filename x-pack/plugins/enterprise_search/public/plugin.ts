@@ -42,9 +42,7 @@ export class EnterpriseSearchPlugin implements Plugin {
     core.application.register({
       id: 'enterprise_search',
       title: 'App Search', // TODO: This will eventually be 'Enterprise Search' once there's more than just App Search in here
-      euiIconType: AppSearchLogo, // TODO: Temporary - App Search will likely no longer need an icon once the nav structure changes.
-      category: DEFAULT_APP_CATEGORIES.management, // TODO - This is likely not final/correct
-      order: 10, // TODO - This will also likely not be needed once new nav structure changes land
+      category: DEFAULT_APP_CATEGORIES.enterpriseSearch,
       mount: async (params: AppMountParameters) => {
         const [coreStart] = await core.getStartServices();
 
