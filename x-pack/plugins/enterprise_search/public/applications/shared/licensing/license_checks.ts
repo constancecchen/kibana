@@ -4,5 +4,8 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-export { LicenseContext, LicenseProvider, ILicenseContext } from './license_context';
-export { hasPlatinumLicense } from './license_checks';
+import { ILicense } from '../../../../../../licensing/public';
+
+export const hasPlatinumLicense = (license: ILicenseContext) => {
+  return license?.isActive && ['platinum', 'enterprise', 'trial'].includes(license?.type);
+};
