@@ -41,7 +41,6 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
   const engineLinkProps = name => ({
     href: `${enterpriseSearchUrl}/as/engines/${name}`,
     target: '_blank',
-    ['data-test-subj']: 'engineNameLink',
     onClick: () =>
       sendTelemetry({
         http,
@@ -57,7 +56,11 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
       name: i18n.translate('xpack.appSearch.enginesOverview.table.column.name', {
         defaultMessage: 'Name',
       }),
-      render: name => <EuiLink {...engineLinkProps(name)}>{name}</EuiLink>,
+      render: name => (
+        <EuiLink data-test-subj="engineNameLink" {...engineLinkProps(name)}>
+          {name}
+        </EuiLink>
+      ),
       width: '30%',
       truncateText: true,
       mobileOptions: {

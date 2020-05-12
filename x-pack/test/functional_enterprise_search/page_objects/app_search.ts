@@ -6,12 +6,12 @@
 
 import { FtrProviderContext } from '../ftr_provider_context';
 
-export function EnterpriseSearchPageProvider({ getService, getPageObjects }: FtrProviderContext) {
+export function AppSearchPageProvider({ getService, getPageObjects }: FtrProviderContext) {
   const PageObjects = getPageObjects(['common']);
 
   return {
     async navigateToPage() {
-      return await PageObjects.common.navigateToApp('enterprise_search');
+      return await PageObjects.common.navigateToApp('app_search');
     },
   };
 }

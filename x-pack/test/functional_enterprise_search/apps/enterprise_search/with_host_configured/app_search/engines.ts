@@ -5,20 +5,23 @@
  */
 
 import expect from '@kbn/expect';
-import { FtrProviderContext } from '../../../ftr_provider_context';
+import { EsArchiver } from 'src/es_archiver';
 import { AppSearchService, IEngine } from '../../../../services/app_search_service';
+import { TestSubjects } from '../../../../../../../test/functional/services/test_subjects';
+import { Browser } from '../../../../../../../test/functional/services/browser';
+import { FtrProviderContext } from '../../../ftr_provider_context';
 
 export default function enterpriseSearchSetupEnginesTests({
   getService,
   getPageObjects,
 }: FtrProviderContext) {
-  const esArchiver = getService('esArchiver');
-  const browser = getService('browser');
+  const esArchiver = getService('esArchiver') as EsArchiver;
+  const browser = getService('browser') as Browser;
   const retry = getService('retry');
-  const testSubjects = getService('testSubjects');
+  const testSubjects = getService('testSubjects') as TestSubjects;
   const appSearch = getService('appSearch') as AppSearchService;
 
-  const PageObjects = getPageObjects(['enterpriseSearch', 'security']);
+  const PageObjects = getPageObjects(['appSearch', 'security']);
 
   describe('Engines Overview', function() {
     this.tags('smoke');
@@ -48,11 +51,30 @@ export default function enterpriseSearchSetupEnginesTests({
           expectSpaceSelector: false,
         });
 
-        await PageObjects.enterpriseSearch.navigateToPage();
+        await PageObjects.appSearch.navigateToPage();
         await retry.try(async function() {
           const currentUrl = await browser.getCurrentUrl();
           expect(currentUrl).to.contain('/app_search');
         });
+      });
+
+      it('lists engines', async () => {
+        const engines = await testSubjects.find('appSearchEngines');
+        const engineLinks = await testSubjects.findAllDescendant('engineNameLink', engines);
+        const engineLinksText = await Promise.all(engineLinks.map(l => l.getVisibleText()));
+
+        expect(engineLinksText.includes(engine1.name)).to.equal(true);
+        expect(engineLinksText.includes(engine2.name)).to.equal(true);
+      });
+
+      it('lists meta engines', async () => {
+        const metaEngines = await testSubjects.find('appSearchMetaEngines');
+        const metaEngineLinks = await await testSubjects.findAllDescendant(
+          'engineNameLink',
+          metaEngines
+        );
+        const metaEngineLinksText = await Promise.all(metaEngineLinks.map(l => l.getVisibleText()));
+        expect(metaEngineLinksText.includes(metaEngine.name)).to.equal(true);
       });
     });
   });

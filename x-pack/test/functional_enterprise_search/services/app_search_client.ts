@@ -11,6 +11,8 @@ import http from 'http';
  */
 const makeRequest = <T>(method: string, path: string, body?: object): Promise<T> => {
   return new Promise(function(resolve, reject) {
+    // Throw error if no key is configured
+    // Handle API errors
     const APP_SEARCH_API_KEY = process.env.APP_SEARCH_API_KEY || '';
     let postData;
 

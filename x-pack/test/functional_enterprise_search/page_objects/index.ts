@@ -4,5 +4,10 @@
  * you may not use this file except in compliance with the Elastic License.
  */
 
-export * from '../../functional/page_objects';
-export { EnterpriseSearchPageProvider } from './enterprise_search';
+import { pageObjects as basePageObjects } from '../../functional/page_objects';
+import { AppSearchPageProvider } from './app_search';
+
+export const pageObjects = {
+  ...basePageObjects,
+  appSearch: AppSearchPageProvider,
+};
