@@ -24,7 +24,6 @@ export default function enterpriseSearchSetupEnginesTests({
   const PageObjects = getPageObjects(['appSearch', 'security']);
 
   describe('Engines Overview', function() {
-    this.tags('smoke');
     let engine1: IEngine;
     let engine2: IEngine;
     let metaEngine: IEngine;
@@ -32,7 +31,7 @@ export default function enterpriseSearchSetupEnginesTests({
     before(async () => {
       await esArchiver.load('empty_kibana');
       engine1 = await appSearch.createEngine();
-      engine2 = await appSearch.createEngineWithDocs();
+      engine2 = await appSearch.createEngine();
       metaEngine = await appSearch.createMetaEngine([engine1.name, engine2.name]);
     });
 
@@ -43,7 +42,7 @@ export default function enterpriseSearchSetupEnginesTests({
       appSearch.destroyEngine(metaEngine.name);
     });
 
-    describe('when an enterpriseSearch host is configured', () => {
+    describe('when an enterpriseSearch.host is configured', () => {
       it('navigating to the enterprise_search plugin will redirect a user to the App Search Engines Overview page', async () => {
         await PageObjects.security.forceLogout();
         const { user, password } = appSearch.getEnterpriseSearchUser();
