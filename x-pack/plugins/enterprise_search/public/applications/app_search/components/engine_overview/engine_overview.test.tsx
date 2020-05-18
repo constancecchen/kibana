@@ -70,7 +70,7 @@ describe('EngineOverview', () => {
       results: [
         {
           name: 'hello-world',
-          created_at: 'somedate',
+          created_at: 'Fri, 1 Jan 1970 12:00:00 +0000',
           document_count: 50,
           field_count: 10,
         },

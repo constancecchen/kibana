@@ -6,7 +6,7 @@
 
 import React, { useContext } from 'react';
 import { EuiBasicTable, EuiLink } from '@elastic/eui';
-import { FormattedMessage } from '@kbn/i18n/react';
+import { FormattedMessage, FormattedDate, FormattedNumber } from '@kbn/i18n/react';
 import { i18n } from '@kbn/i18n';
 
 import { sendTelemetry } from '../../../shared/telemetry';
@@ -72,14 +72,10 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
         defaultMessage: 'Created At',
       }),
       dataType: 'string',
-      render: dateString => {
+      render: dateString => (
         // e.g., January 1, 1970
-        return new Date(dateString).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        });
-      },
+        <FormattedDate value={new Date(dateString)} year="numeric" month="long" day="numeric" />
+      ),
     },
     {
       field: 'document_count',
@@ -87,7 +83,7 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
         defaultMessage: 'Document Count',
       }),
       dataType: 'number',
-      render: number => number.toLocaleString(), // Display with comma thousand separators
+      render: number => <FormattedNumber value={number} />,
       truncateText: true,
     },
     {
@@ -96,7 +92,7 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
         defaultMessage: 'Field Count',
       }),
       dataType: 'number',
-      render: number => number.toLocaleString(), // Display with comma thousand separators
+      render: number => <FormattedNumber value={number} />,
       truncateText: true,
     },
     {
