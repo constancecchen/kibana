@@ -25,6 +25,14 @@ node scripts/functional_tests --config test/functional_enterprise_search/without
 
 These tests will not currently start an instance of App Search automatically. As such, they are not run as part of CI and are most useful for local regression testing.
 
+The easiest way to start Enterprise Search for these tests is to check out the `ent-search` project
+and use the following script.
+
+```
+cd script/stack_scripts
+/start-with-license-and-expiration.sh platinum 500000
+```
+
 Requirements for Enterprise Search:
 
 - Running on port 3002 against a separate Elasticsearch cluster.

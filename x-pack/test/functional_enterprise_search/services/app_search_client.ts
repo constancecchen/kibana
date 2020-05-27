@@ -11,9 +11,12 @@ import http from 'http';
  */
 const makeRequest = <T>(method: string, path: string, body?: object): Promise<T> => {
   return new Promise(function(resolve, reject) {
-    // Throw error if no key is configured
-    // Handle API errors
-    const APP_SEARCH_API_KEY = process.env.APP_SEARCH_API_KEY || '';
+    const APP_SEARCH_API_KEY = process.env.APP_SEARCH_API_KEY;
+
+    if (!APP_SEARCH_API_KEY) {
+      throw new Error('Please provide a valid APP_SEARCH_API_KEY. See README for more details.');
+    }
+
     let postData;
 
     if (body) {
@@ -45,6 +48,10 @@ const makeRequest = <T>(method: string, path: string, body?: object): Promise<T>
             responseBody = JSON.parse(Buffer.concat(bodyChunks).toString());
           } catch (e) {
             reject(e);
+          }
+
+          if (res.statusCode > 299) {
+            reject('Error calling App Search API: ' + JSON.stringify(responseBody));
           }
 
           resolve(responseBody);
