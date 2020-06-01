@@ -13,6 +13,7 @@ export const plugin = (initializerContext: PluginInitializerContext) => {
 };
 
 export const configSchema = schema.object({
+  enabled: schema.boolean({ defaultValue: false }), // TODO: This plugin is disabled for master/8.x only. This line should be removed once Enterprise Search becomes 8.x compatible
   host: schema.maybe(schema.string()),
 });
 
