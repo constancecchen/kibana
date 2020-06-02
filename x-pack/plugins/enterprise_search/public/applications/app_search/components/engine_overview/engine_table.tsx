@@ -56,7 +56,7 @@ export const EngineTable: ReactFC<IEngineTableProps> = ({
       name: i18n.translate('xpack.appSearch.enginesOverview.table.column.name', {
         defaultMessage: 'Name',
       }),
-      render: name => (
+      render: (name) => (
         <EuiLink data-test-subj="engineNameLink" {...engineLinkProps(name)}>
           {name}
         </EuiLink>
