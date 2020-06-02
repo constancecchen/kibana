@@ -10,7 +10,7 @@ import http from 'http';
  * A simple request client for making API calls to the App Search API
  */
 const makeRequest = <T>(method: string, path: string, body?: object): Promise<T> => {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     const APP_SEARCH_API_KEY = process.env.APP_SEARCH_API_KEY;
 
     if (!APP_SEARCH_API_KEY) {
@@ -36,13 +36,13 @@ const makeRequest = <T>(method: string, path: string, body?: object): Promise<T>
           ...(!!postData && { 'Content-Length': Buffer.byteLength(postData) }),
         },
       },
-      res => {
+      (res) => {
         const bodyChunks: Uint8Array[] = [];
-        res.on('data', function(chunk) {
+        res.on('data', function (chunk) {
           bodyChunks.push(chunk);
         });
 
-        res.on('end', function() {
+        res.on('end', function () {
           let responseBody;
           try {
             responseBody = JSON.parse(Buffer.concat(bodyChunks).toString());
@@ -59,7 +59,7 @@ const makeRequest = <T>(method: string, path: string, body?: object): Promise<T>
       }
     );
 
-    req.on('error', e => {
+    req.on('error', (e) => {
       reject(e);
     });
 
@@ -104,7 +104,7 @@ const search = async (engineName: string): Promise<ISearchResponse> => {
 // Since the App Search API does not issue document receipts, the only way to tell whether or not documents
 // are fully indexed is to poll the search endpoint.
 export const waitForIndexedDocs = (engineName: string) => {
-  return new Promise(async function(resolve) {
+  return new Promise(async function (resolve) {
     let isReady = false;
     while (!isReady) {
       const response = await search(engineName);

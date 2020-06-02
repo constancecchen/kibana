@@ -21,7 +21,7 @@ export default function enterpriseSearchSetupEnginesTests({
 
   const PageObjects = getPageObjects(['appSearch', 'security']);
 
-  describe('Engines Overview', function() {
+  describe('Engines Overview', function () {
     let engine1: IEngine;
     let engine2: IEngine;
     let metaEngine: IEngine;
@@ -49,7 +49,7 @@ export default function enterpriseSearchSetupEnginesTests({
         });
 
         await PageObjects.appSearch.navigateToPage();
-        await retry.try(async function() {
+        await retry.try(async function () {
           const currentUrl = await browser.getCurrentUrl();
           expect(currentUrl).to.contain('/app_search');
         });
@@ -57,7 +57,7 @@ export default function enterpriseSearchSetupEnginesTests({
 
       it('lists engines', async () => {
         const engineLinks = await PageObjects.appSearch.getEngineLinks();
-        const engineLinksText = await Promise.all(engineLinks.map(l => l.getVisibleText()));
+        const engineLinksText = await Promise.all(engineLinks.map((l) => l.getVisibleText()));
 
         expect(engineLinksText.includes(engine1.name)).to.equal(true);
         expect(engineLinksText.includes(engine2.name)).to.equal(true);
@@ -65,7 +65,9 @@ export default function enterpriseSearchSetupEnginesTests({
 
       it('lists meta engines', async () => {
         const metaEngineLinks = await PageObjects.appSearch.getMetaEngineLinks();
-        const metaEngineLinksText = await Promise.all(metaEngineLinks.map(l => l.getVisibleText()));
+        const metaEngineLinksText = await Promise.all(
+          metaEngineLinks.map((l) => l.getVisibleText())
+        );
         expect(metaEngineLinksText.includes(metaEngine.name)).to.equal(true);
       });
     });
