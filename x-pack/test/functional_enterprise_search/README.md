@@ -15,7 +15,7 @@ Ex.
 cd x-pack
 
 # Run tests that require enterpriseSearch.host variable
-APP_SEARCH_API_KEY=private-2shg47w6zpj62zqe8qb5fap9 node scripts/functional_tests --config test/functional_enterprise_search/with_host_configured.config.ts
+APP_SEARCH_API_KEY=[use private key from local App Search instance here] node scripts/functional_tests --config test/functional_enterprise_search/with_host_configured.config.ts
 
 # Run tests that do not require enterpriseSearch.host variable
 node scripts/functional_tests --config test/functional_enterprise_search/without_host_configured.config.ts
@@ -37,5 +37,5 @@ Requirements for Enterprise Search:
 
 - Running on port 3002 against a separate Elasticsearch cluster.
 - Elasticsearch must have a platinum or greater level license (or trial).
-- Must have Standard Auth configured with an `enterprise_search` user with password `changeme`.
+- Must have Standard or Native Auth configured with an `enterprise_search` user with password `changeme`.
 - There should be NO existing Engines or Meta Engines.

@@ -21,7 +21,7 @@ export function AppSearchPageProvider({ getService, getPageObjects }: FtrProvide
       return await testSubjects.findAllDescendant('engineNameLink', engines);
     },
 
-    async getMeatEngineLinks() {
+    async getMetaEngineLinks() {
       const metaEngines = await testSubjects.find('appSearchMetaEngines');
       return await testSubjects.findAllDescendant('engineNameLink', metaEngines);
     },

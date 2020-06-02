@@ -64,7 +64,7 @@ export default function enterpriseSearchSetupEnginesTests({
       });
 
       it('lists meta engines', async () => {
-        const metaEngineLinks = await PageObjects.appSearch.getMeatEngineLinks();
+        const metaEngineLinks = await PageObjects.appSearch.getMetaEngineLinks();
         const metaEngineLinksText = await Promise.all(metaEngineLinks.map(l => l.getVisibleText()));
         expect(metaEngineLinksText.includes(metaEngine.name)).to.equal(true);
       });
