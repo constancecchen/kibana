@@ -10,7 +10,7 @@ from that instance set in an Environment variable.
 
 Ex.
 
-```
+```sh
 # Run specs from the x-pack directory
 cd x-pack
 
@@ -18,7 +18,7 @@ cd x-pack
 APP_SEARCH_API_KEY=[use private key from local App Search instance here] node scripts/functional_tests --config test/functional_enterprise_search/with_host_configured.config.ts
 
 # Run tests that do not require enterpriseSearch.host variable
-node scripts/functional_tests --config test/functional_enterprise_search/without_host_configured.config.ts
+APP_SEARCH_API_KEY=[use private key from local App Search instance here] node scripts/functional_tests --config test/functional_enterprise_search/without_host_configured.config.ts
 ```
 
 ## Enterprise Search Requirement
@@ -28,7 +28,7 @@ These tests will not currently start an instance of App Search automatically. As
 The easiest way to start Enterprise Search for these tests is to check out the `ent-search` project
 and use the following script.
 
-```
+```sh
 cd script/stack_scripts
 /start-with-license-and-expiration.sh platinum 500000
 ```
