@@ -12,6 +12,7 @@ import {
   CoreSetup,
   Logger,
   SavedObjectsServiceStart,
+  IRouter,
 } from 'src/core/server';
 import { UsageCollectionSetup } from 'src/plugins/usage_collection/server';
 
@@ -26,6 +27,13 @@ export interface PluginsSetup {
 
 export interface ServerConfigType {
   host?: string;
+}
+
+export interface IRouteDependencies {
+  router: IRouter;
+  config: ServerConfigType;
+  log: Logger;
+  getSavedObjectsService?(): SavedObjectsServiceStart;
 }
 
 export class EnterpriseSearchPlugin implements Plugin {
