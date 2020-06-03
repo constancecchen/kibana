@@ -31,7 +31,6 @@ export interface ServerConfigType {
 export class EnterpriseSearchPlugin implements Plugin {
   private config: Observable<ServerConfigType>;
   private logger: Logger;
-  private savedObjects?: SavedObjectsServiceStart;
 
   constructor(initializerContext: PluginInitializerContext) {
     this.config = initializerContext.config.create<ServerConfigType>();
