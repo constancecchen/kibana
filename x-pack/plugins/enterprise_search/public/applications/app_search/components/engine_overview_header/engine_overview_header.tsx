@@ -24,7 +24,7 @@ export const EngineOverviewHeader: React.FC<IEngineOverviewHeaderProps> = ({
     fill: true,
     iconType: 'popout',
     'data-test-subj': 'launchButton',
-  };
+  } as any;
   if (isButtonDisabled) {
     buttonProps.isDisabled = true;
   } else {

@@ -33,10 +33,10 @@ describe('EUI & React Router Component Helpers', () => {
   });
 
   it('passes down all ...rest props', () => {
-    const wrapper = shallow(<EuiReactRouterLink to="/" data-test-subj="foo" disabled={true} />);
+    const wrapper = shallow(<EuiReactRouterLink to="/" data-test-subj="foo" external={true} />);
     const link = wrapper.find(EuiLink);
 
-    expect(link.prop('disabled')).toEqual(true);
+    expect(link.prop('external')).toEqual(true);
     expect(link.prop('data-test-subj')).toEqual('foo');
   });
 
