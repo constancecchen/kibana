@@ -21,6 +21,7 @@ export const registerTelemetryUsageCollector = (
   const telemetryUsageCollector = usageCollection.makeUsageCollector({
     type: 'app_search',
     fetch: async () => fetchTelemetryMetrics(savedObjects),
+    isReady: () => true,
   });
   usageCollection.registerCollector(telemetryUsageCollector);
 };
@@ -71,9 +72,12 @@ const fetchTelemetryMetrics = async (savedObjects: SavedObjectsServiceStart) => 
 interface ISavedObjectAttributes {
   [key: string]: any;
 }
-
-const getSavedObjectAttributesFromRepo = async (
+type TGetSavedObjectAttributes = (
   savedObjectsRepository: ISavedObjectsRepository
+) => ISavedObjectAttributes;
+
+const getSavedObjectAttributesFromRepo: TGetSavedObjectAttributes = async (
+  savedObjectsRepository
 ) => {
   try {
     return (await savedObjectsRepository.get(AS_TELEMETRY_NAME, AS_TELEMETRY_NAME)).attributes;
