@@ -72,7 +72,7 @@ export const EngineOverview: React.FC = () => {
     const callbacks = { setResults: setEngines, setResultsTotal: setEnginesTotal };
 
     setEnginesData(params, callbacks);
-  }, [enginesPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [enginesPage]);
 
   useEffect(() => {
     if (hasPlatinumLicense(license)) {
@@ -81,7 +81,7 @@ export const EngineOverview: React.FC = () => {
 
       setEnginesData(params, callbacks);
     }
-  }, [license, metaEnginesPage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [license, metaEnginesPage]);
 
   if (hasErrorConnecting) return <ErrorState />;
   if (hasNoAccount) return <NoUserState />;
