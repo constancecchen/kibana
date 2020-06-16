@@ -36,12 +36,16 @@ interface ISetupGuideProps {
   children: React.ReactElement;
   productName: string;
   productEuiIcon: 'logoAppSearch' | 'logoWorkplaceSearch';
+  standardAuthLink?: string;
+  elasticsearchNativeAuthLink?: string;
 }
 
 export const SetupGuide: React.FC<ISetupGuideProps> = ({
   children,
   productName,
   productEuiIcon,
+  standardAuthLink,
+  elasticsearchNativeAuthLink,
 }) => {
   return (
     <EuiPage className="setupGuide">
@@ -117,13 +121,12 @@ export const SetupGuide: React.FC<ISetupGuideProps> = ({
                         defaultMessage="If you’re using {elasticsearchNativeAuthLink} within {productName} - you’re all set! All users should be able to use {productName} in Kibana automatically, inheriting the existing access and permissions they have within {productName}."
                         values={{
                           productName,
-                          elasticsearchNativeAuthLink: (
-                            <EuiLink
-                              href="https://swiftype.com/documentation/app-search/self-managed/security#elasticsearch-native-realm"
-                              target="_blank"
-                            >
+                          elasticsearchNativeAuthLink: elasticsearchNativeAuthLink ? (
+                            <EuiLink href={elasticsearchNativeAuthLink} target="_blank">
                               Elasticsearch Native Auth
                             </EuiLink>
+                          ) : (
+                            'Elasticsearch Native Auth'
                           ),
                         }}
                       />
@@ -201,13 +204,12 @@ export const SetupGuide: React.FC<ISetupGuideProps> = ({
                             defaultMessage="{productName} operating on {standardAuthLink} is currently not fully supported by this plugin. Users created in {productName} must be granted Kibana access. Users created in Kibana will not see {productName} in the navigation menu."
                             values={{
                               productName,
-                              standardAuthLink: (
-                                <EuiLink
-                                  href="https://swiftype.com/documentation/app-search/self-managed/security#standard"
-                                  target="_blank"
-                                >
+                              standardAuthLink: standardAuthLink ? (
+                                <EuiLink href={standardAuthLink} target="_blank">
                                   Standard Auth
                                 </EuiLink>
+                              ) : (
+                                'Standard Auth'
                               ),
                             }}
                           />

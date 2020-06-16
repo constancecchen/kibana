@@ -18,6 +18,8 @@ export const SetupGuide: React.FC = () => (
   <SetupGuideLayout
     productName={i18n.translate('xpack.appSearch.productName', { defaultMessage: 'App Search' })}
     productEuiIcon="logoAppSearch"
+    standardAuthLink="https://swiftype.com/documentation/app-search/self-managed/security#standard"
+    elasticsearchNativeAuthLink="https://swiftype.com/documentation/app-search/self-managed/security#elasticsearch-native-realm"
   >
     <SetBreadcrumbs text="Setup Guide" />
     <SendTelemetry action="viewed" metric="setup_guide" />

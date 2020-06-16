@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import { EuiSteps, EuiIcon } from '@elastic/eui';
+import { EuiSteps, EuiIcon, EuiLink } from '@elastic/eui';
 
 import { mountWithContext } from '../../__mocks__';
 
@@ -24,5 +24,21 @@ describe('SetupGuide', () => {
     expect(wrapper.find(EuiIcon).prop('type')).toEqual('logoEnterpriseSearch');
     expect(wrapper.find('[data-test-subj="test"]').text()).toEqual('Wow!');
     expect(wrapper.find(EuiSteps)).toHaveLength(1);
+  });
+
+  it('renders with optional auth links', () => {
+    const wrapper = mountWithContext(
+      <SetupGuide
+        productName="Foo"
+        productEuiIcon="Bar"
+        standardAuthLink="http://foo.com"
+        elasticsearchNativeAuthLink="http://bar.com"
+      >
+        Baz
+      </SetupGuide>
+    );
+
+    expect(wrapper.find('EuiLink').first().prop('href')).toEqual('http://bar.com');
+    expect(wrapper.find('EuiLink').last().prop('href')).toEqual('http://foo.com');
   });
 });
