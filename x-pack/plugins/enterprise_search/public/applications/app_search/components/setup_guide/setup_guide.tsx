@@ -33,11 +33,11 @@ import './setup_guide.scss';
 
 export const SetupGuide: React.FC = () => {
   return (
-    <EuiPage className="setup-guide">
+    <EuiPage className="setupGuide">
       <SetBreadcrumbs text="Setup Guide" />
       <SendTelemetry action="viewed" metric="setup_guide" />
 
-      <EuiPageSideBar>
+      <EuiPageSideBar className="setupGuide__sidebar">
         <EuiText color="subdued" size="s">
           <strong>
             <FormattedMessage id="xpack.appSearch.setupGuide.title" defaultMessage="Setup Guide" />
@@ -64,7 +64,7 @@ export const SetupGuide: React.FC = () => {
           rel="noopener noreferrer"
         >
           <img
-            className="setup-guide__thumbnail"
+            className="setupGuide__thumbnail"
             src={GettingStarted}
             alt={i18n.translate('xpack.appSearch.setupGuide.videoAlt', {
               defaultMessage:
@@ -94,7 +94,7 @@ export const SetupGuide: React.FC = () => {
         </EuiText>
       </EuiPageSideBar>
 
-      <EuiPageBody>
+      <EuiPageBody className="setupGuide__body">
         <EuiPageContent>
           <EuiSteps
             headingElement="h2"
