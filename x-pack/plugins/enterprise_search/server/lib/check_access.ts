@@ -54,7 +54,10 @@ export const checkAccess = async ({
         .globally(security.authz.actions.ui.get('enterprise_search', 'app_search'));
       return hasAllRequested;
     } catch (err) {
-      return false;
+      if (err.statusCode === 401 || err.statusCode === 403) {
+        return false;
+      }
+      throw err;
     }
   };
   if (await isSuperUser()) {

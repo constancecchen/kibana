@@ -22,6 +22,11 @@ describe('checkAccess', () => {
           hasAllRequested: false,
         }),
       }),
+      actions: {
+        ui: {
+          get: () => null,
+        },
+      },
     },
   };
   const mockDependencies = {
@@ -60,18 +65,29 @@ describe('checkAccess', () => {
       });
     });
 
-    it("falls back to assuming a non-superuser role if a user's roles cannot be accessed", async () => {
+    it('falls back to assuming a non-superuser role if auth credentials are missing', async () => {
       const security = {
-        ...mockSecurity,
         authz: {
-          mode: { useRbacForRequest: () => true },
-          checkPrivilegesWithRequest: undefined,
+          ...mockSecurity.authz,
+          checkPrivilegesWithRequest: () => ({
+            globally: () => Promise.reject({ statusCode: 403 }),
+          }),
         },
       };
       expect(await checkAccess({ ...mockDependencies, security })).toEqual({
         hasAppSearchAccess: false,
         hasWorkplaceSearchAccess: false,
       });
+    });
+
+    it('throws other authz errors', async () => {
+      const security = {
+        authz: {
+          ...mockSecurity.authz,
+          checkPrivilegesWithRequest: undefined,
+        },
+      };
+      await expect(checkAccess({ ...mockDependencies, security })).rejects.toThrow();
     });
   });
 
