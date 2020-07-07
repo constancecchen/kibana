@@ -19,6 +19,9 @@ export class NavLinksBuilder {
       app_search: {
         navLinkId: 'app_search',
       },
+      workplace_search: {
+        navLinkId: 'workplace_search',
+      },
     };
   }
 
