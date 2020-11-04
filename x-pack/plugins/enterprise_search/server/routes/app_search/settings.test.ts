@@ -95,6 +95,8 @@ describe('log settings routes', () => {
     });
 
     it('creates a request to enterprise search', () => {
+      mockRouter.callRoute({});
+
       expect(mockRequestHandler.createRequest).toHaveBeenCalledWith({
         path: '/as/log_settings',
       });
