@@ -6,10 +6,9 @@
 
 import { kea, MakeLogicType } from 'kea';
 
-import { ELogRetentionOptions, ILogRetention, ILogRetentionServer } from './types';
+import { ELogRetentionOptions, ILogRetention } from './types';
 import { HttpLogic } from '../../../../shared/http';
 import { flashAPIErrors } from '../../../../shared/flash_messages';
-import { convertLogRetentionFromServerToClient } from './utils/convert_log_retention';
 
 interface ILogRetentionActions {
   clearLogRetentionUpdating(): { value: boolean };
@@ -82,9 +81,7 @@ export const LogRetentionLogic = kea<MakeLogicType<ILogRetentionValues, ILogRete
       try {
         const { http } = HttpLogic.values;
         const response = await http.get('/api/app_search/log_settings');
-        actions.updateLogRetention(
-          convertLogRetentionFromServerToClient(response as ILogRetentionServer)
-        );
+        actions.updateLogRetention(response);
       } catch (e) {
         flashAPIErrors(e);
       } finally {
@@ -99,9 +96,7 @@ export const LogRetentionLogic = kea<MakeLogicType<ILogRetentionValues, ILogRete
         const response = await http.put('/api/app_search/log_settings', {
           body: JSON.stringify(updateData),
         });
-        actions.updateLogRetention(
-          convertLogRetentionFromServerToClient(response as ILogRetentionServer)
-        );
+        actions.updateLogRetention(response);
       } catch (e) {
         flashAPIErrors(e);
       } finally {

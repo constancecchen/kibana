@@ -21,20 +21,7 @@ import { ELogRetentionOptions } from './types';
 import { LogRetentionLogic } from './log_retention_logic';
 
 describe('LogRetentionLogic', () => {
-  const TYPICAL_SERVER_LOG_RETENTION = {
-    analytics: {
-      disabled_at: null,
-      enabled: true,
-      retention_policy: { is_default: true, min_age_days: 180 },
-    },
-    api: {
-      disabled_at: null,
-      enabled: true,
-      retention_policy: { is_default: true, min_age_days: 180 },
-    },
-  };
-
-  const TYPICAL_CLIENT_LOG_RETENTION = {
+  const MOCK_LOG_RETENTION = {
     analytics: {
       disabledAt: null,
       enabled: true,
@@ -212,7 +199,7 @@ describe('LogRetentionLogic', () => {
 
       it('will call an API endpoint and update log retention', async () => {
         jest.spyOn(LogRetentionLogic.actions, 'updateLogRetention');
-        const promise = Promise.resolve(TYPICAL_SERVER_LOG_RETENTION);
+        const promise = Promise.resolve(MOCK_LOG_RETENTION);
         http.put.mockReturnValue(promise);
 
         LogRetentionLogic.actions.saveLogRetention(ELogRetentionOptions.Analytics, true);
@@ -227,9 +214,8 @@ describe('LogRetentionLogic', () => {
 
         await promise;
         expect(LogRetentionLogic.actions.updateLogRetention).toHaveBeenCalledWith(
-          TYPICAL_CLIENT_LOG_RETENTION
+          MOCK_LOG_RETENTION
         );
-
         expect(LogRetentionLogic.actions.clearLogRetentionUpdating).toHaveBeenCalled();
       });
 
@@ -336,16 +322,14 @@ describe('LogRetentionLogic', () => {
       jest.spyOn(LogRetentionLogic.actions, 'clearLogRetentionUpdating');
       jest.spyOn(LogRetentionLogic.actions, 'updateLogRetention').mockImplementationOnce(() => {});
 
-      const promise = Promise.resolve(TYPICAL_SERVER_LOG_RETENTION);
+      const promise = Promise.resolve(MOCK_LOG_RETENTION);
       http.get.mockReturnValue(promise);
 
       LogRetentionLogic.actions.fetchLogRetention();
 
       expect(http.get).toHaveBeenCalledWith(`/api/app_search/log_settings`);
       await promise;
-      expect(LogRetentionLogic.actions.updateLogRetention).toHaveBeenCalledWith(
-        TYPICAL_CLIENT_LOG_RETENTION
-      );
+      expect(LogRetentionLogic.actions.updateLogRetention).toHaveBeenCalledWith(MOCK_LOG_RETENTION);
 
       expect(LogRetentionLogic.actions.clearLogRetentionUpdating).toHaveBeenCalled();
     });
