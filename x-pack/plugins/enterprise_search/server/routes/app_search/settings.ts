@@ -8,6 +8,19 @@ import { schema } from '@kbn/config-schema';
 
 import { IRouteDependencies } from '../../plugin';
 
+interface ILogSettings {
+  enabled: boolean;
+  disabled_at: string | null;
+  retention_policy: {
+    is_default: boolean;
+    min_age_days: number;
+  } | null;
+}
+interface ILogSettingsResponse {
+  api: ILogSettings;
+  analytics: ILogSettings;
+}
+
 export function registerSettingsRoutes({
   router,
   enterpriseSearchRequestHandler,
@@ -19,6 +32,28 @@ export function registerSettingsRoutes({
     },
     enterpriseSearchRequestHandler.createRequest({
       path: '/as/log_settings',
+      jsonTransform: (json: ILogSettingsResponse) => ({
+        api: {
+          enabled: json.api.enabled,
+          disabledAt: json.api.disabled_at,
+          retentionPolicy: json.api.retention_policy
+            ? {
+                isDefault: json.api.retention_policy.is_default,
+                minAgeDays: json.api.retention_policy.min_age_days,
+              }
+            : null,
+        },
+        analytics: {
+          enabled: json.analytics.enabled,
+          disabledAt: json.analytics.disabled_at,
+          retentionPolicy: json.analytics.retention_policy
+            ? {
+                isDefault: json.analytics.retention_policy.is_default,
+                minAgeDays: json.analytics.retention_policy.min_age_days,
+              }
+            : null,
+        },
+      }),
     })
   );
 

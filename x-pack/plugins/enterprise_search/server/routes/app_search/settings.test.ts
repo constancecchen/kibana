@@ -27,6 +27,56 @@ describe('log settings routes', () => {
 
       expect(mockRequestHandler.createRequest).toHaveBeenCalledWith({
         path: '/as/log_settings',
+        jsonTransform: expect.any(Function),
+      });
+    });
+
+    describe('jsonTransform', () => {
+      it('camelCases keys', () => {
+        const mockResponse = {
+          api: {
+            enabled: true,
+            disabled_at: null,
+            retention_policy: { is_default: true, min_age_days: 7 },
+          },
+          analytics: {
+            enabled: true,
+            disabled_at: null,
+            retention_policy: { is_default: true, min_age_days: 180 },
+          },
+        };
+
+        expect(mockRequestHandler.jsonTransform(mockResponse)).toEqual({
+          api: {
+            enabled: true,
+            disabledAt: null,
+            retentionPolicy: { isDefault: true, minAgeDays: 7 },
+          },
+          analytics: {
+            enabled: true,
+            disabledAt: null,
+            retentionPolicy: { isDefault: true, minAgeDays: 180 },
+          },
+        });
+      });
+
+      it('handles empty retention policies', () => {
+        const mockResponse = {
+          api: {
+            enabled: false,
+            disabled_at: null,
+            retention_policy: null,
+          },
+          analytics: {
+            enabled: false,
+            disabled_at: null,
+            retention_policy: null,
+          },
+        };
+
+        const transformedResponse = mockRequestHandler.jsonTransform(mockResponse);
+        expect(transformedResponse.api.retentionPolicy).toBeNull();
+        expect(transformedResponse.analytics.retentionPolicy).toBeNull();
       });
     });
   });
