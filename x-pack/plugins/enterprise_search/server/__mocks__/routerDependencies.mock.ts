@@ -14,6 +14,9 @@ export const mockRequestHandler = {
   hasValidData(data: any) {
     return (this.createRequest as jest.Mock).mock.calls[0][0].hasValidData(data);
   },
+  jsonTransform(json: any) {
+    return (this.createRequest as jest.Mock).mock.calls[0][0].jsonTransform(json);
+  },
 };
 
 export const mockConfig = {

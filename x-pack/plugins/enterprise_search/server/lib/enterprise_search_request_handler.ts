@@ -24,6 +24,7 @@ interface IRequestParams<ResponseBody> {
   path: string;
   params?: object;
   hasValidData?: (body?: ResponseBody) => boolean;
+  jsonTransform?: (json?: ResponseBody) => ResponseBody;
 }
 interface IErrorResponse {
   message: string;
@@ -57,6 +58,7 @@ export class EnterpriseSearchRequestHandler {
     path,
     params = {},
     hasValidData = () => true,
+    jsonTransform,
   }: IRequestParams<ResponseBody>) {
     return async (
       _context: RequestHandlerContext,
@@ -107,10 +109,13 @@ export class EnterpriseSearchRequestHandler {
           return this.handleClientError(response, apiResponse);
         }
 
-        // Check returned data
-        const json = await apiResponse.json();
+        // Check/transform returned data
+        let json = await apiResponse.json();
         if (!hasValidData(json)) {
           return this.handleInvalidDataError(response, url, json);
+        }
+        if (jsonTransform) {
+          json = jsonTransform(json);
         }
 
         // Pass successful responses back to the front-end

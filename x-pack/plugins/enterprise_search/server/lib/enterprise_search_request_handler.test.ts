@@ -144,6 +144,25 @@ describe('EnterpriseSearchRequestHandler', () => {
           headers: mockExpectedResponseHeaders,
         });
       });
+
+      it('transforms JSON response data if a jsonTransform fn is passed', async () => {
+        EnterpriseSearchAPI.mockReturn({ some_key: true });
+
+        const requestHandler = enterpriseSearchRequestHandler.createRequest({
+          path: '/api/example',
+          jsonTransform: (json: any) => ({
+            someKey: json.some_key,
+          }),
+        });
+        await makeAPICall(requestHandler);
+
+        EnterpriseSearchAPI.shouldHaveBeenCalledWith('http://localhost:3002/api/example');
+        expect(responseMock.custom).toHaveBeenCalledWith({
+          body: { someKey: true },
+          statusCode: 200,
+          headers: mockExpectedResponseHeaders,
+        });
+      });
     });
   });
 
