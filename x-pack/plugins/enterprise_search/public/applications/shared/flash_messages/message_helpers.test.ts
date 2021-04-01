@@ -16,7 +16,7 @@ import {
   clearFlashMessages,
   flashSuccessToast,
   flashErrorToast,
-} from './set_message_helpers';
+} from './message_helpers';
 
 describe('Flash Message Helpers', () => {
   const message = 'I am a message';

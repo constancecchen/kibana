@@ -17,4 +17,4 @@ export {
   flashSuccessToast,
   flashErrorToast,
   clearFlashMessages,
-} from './set_message_helpers';
+} from './message_helpers';
