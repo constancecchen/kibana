@@ -28,7 +28,7 @@ describe('GroupLogic', () => {
     clearFlashMessages,
     flashAPIErrors,
     setSuccessMessage,
-    setQueuedSuccessMessage,
+    queueSuccessCallout,
     queueErrorCallout,
   } = mockFlashMessageHelpers;
 
@@ -272,9 +272,7 @@ describe('GroupLogic', () => {
 
         await nextTick();
         expect(navigateToUrl).toHaveBeenCalledWith(GROUPS_PATH);
-        expect(setQueuedSuccessMessage).toHaveBeenCalledWith(
-          'Group "group" was successfully deleted.'
-        );
+        expect(queueSuccessCallout).toHaveBeenCalledWith('Group "group" was successfully deleted.');
       });
 
       it('handles error', async () => {

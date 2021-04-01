@@ -20,7 +20,7 @@ describe('SampleEngineCreationCtaLogic', () => {
   const { mount } = new LogicMounter(SampleEngineCreationCtaLogic);
   const { http } = mockHttpValues;
   const { navigateToUrl } = mockKibanaValues;
-  const { setQueuedSuccessMessage, flashAPIErrors } = mockFlashMessageHelpers;
+  const { queueSuccessCallout, flashAPIErrors } = mockFlashMessageHelpers;
 
   const DEFAULT_VALUES = {
     isLoading: false,
@@ -85,7 +85,7 @@ describe('SampleEngineCreationCtaLogic', () => {
     it('onSampleEngineCreationSuccess should set a success message and navigate the user to the engine page', () => {
       SampleEngineCreationCtaLogic.actions.onSampleEngineCreationSuccess();
 
-      expect(setQueuedSuccessMessage).toHaveBeenCalledWith('Successfully created engine.');
+      expect(queueSuccessCallout).toHaveBeenCalledWith('Successfully created engine.');
       expect(navigateToUrl).toHaveBeenCalledWith('/engines/national-parks-demo');
     });
   });

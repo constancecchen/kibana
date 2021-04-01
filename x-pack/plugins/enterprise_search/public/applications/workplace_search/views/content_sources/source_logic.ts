@@ -13,7 +13,7 @@ import { DEFAULT_META } from '../../../shared/constants';
 import {
   flashAPIErrors,
   setSuccessMessage,
-  setQueuedSuccessMessage,
+  queueSuccessCallout,
   clearFlashMessages,
 } from '../../../shared/flash_messages';
 import { HttpLogic } from '../../../shared/http';
@@ -210,7 +210,7 @@ export const SourceLogic = kea<MakeLogicType<SourceValues, SourceActions>>({
 
       try {
         const response = await HttpLogic.values.http.delete(route);
-        setQueuedSuccessMessage(
+        queueSuccessCallout(
           i18n.translate(
             'xpack.enterpriseSearch.workplaceSearch.sources.flashMessages.contentSourceRemoved',
             {

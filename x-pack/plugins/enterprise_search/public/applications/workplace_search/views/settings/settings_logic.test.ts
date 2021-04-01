@@ -22,7 +22,7 @@ describe('SettingsLogic', () => {
     clearFlashMessages,
     flashAPIErrors,
     setSuccessMessage,
-    setQueuedSuccessMessage,
+    queueSuccessCallout,
   } = mockFlashMessageHelpers;
   const { mount } = new LogicMounter(SettingsLogic);
   const ORG_NAME = 'myOrg';
@@ -197,7 +197,7 @@ describe('SettingsLogic', () => {
 
         await nextTick();
         expect(navigateToUrl).toHaveBeenCalledWith('/settings/connectors');
-        expect(setQueuedSuccessMessage).toHaveBeenCalled();
+        expect(queueSuccessCallout).toHaveBeenCalled();
       });
 
       it('handles error', async () => {

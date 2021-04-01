@@ -20,7 +20,7 @@ describe('MetaEngineCreationLogic', () => {
   const { mount } = new LogicMounter(MetaEngineCreationLogic);
   const { http } = mockHttpValues;
   const { navigateToUrl } = mockKibanaValues;
-  const { setQueuedSuccessMessage, flashAPIErrors } = mockFlashMessageHelpers;
+  const { queueSuccessCallout, flashAPIErrors } = mockFlashMessageHelpers;
 
   const DEFAULT_VALUES = {
     indexedEngineNames: [],
@@ -130,7 +130,7 @@ describe('MetaEngineCreationLogic', () => {
       });
 
       it('should set a success message', () => {
-        expect(setQueuedSuccessMessage).toHaveBeenCalledWith('Successfully created meta engine.');
+        expect(queueSuccessCallout).toHaveBeenCalledWith('Successfully created meta engine.');
       });
 
       it('should navigate the user to the engine page', () => {

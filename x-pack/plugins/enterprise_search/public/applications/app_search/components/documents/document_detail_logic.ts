@@ -9,7 +9,7 @@ import { kea, MakeLogicType } from 'kea';
 
 import { i18n } from '@kbn/i18n';
 
-import { flashAPIErrors, setQueuedSuccessMessage } from '../../../shared/flash_messages';
+import { flashAPIErrors, queueSuccessCallout } from '../../../shared/flash_messages';
 import { HttpLogic } from '../../../shared/http';
 import { KibanaLogic } from '../../../shared/kibana';
 
@@ -91,7 +91,7 @@ export const DocumentDetailLogic = kea<DocumentDetailLogicType>({
         try {
           const { http } = HttpLogic.values;
           await http.delete(`/api/app_search/engines/${engineName}/documents/${documentId}`);
-          setQueuedSuccessMessage(DELETE_SUCCESS);
+          queueSuccessCallout(DELETE_SUCCESS);
           navigateToUrl(generateEnginePath(ENGINE_DOCUMENTS_PATH));
         } catch (e) {
           flashAPIErrors(e);

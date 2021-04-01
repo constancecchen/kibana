@@ -12,7 +12,7 @@ export { flashAPIErrors } from './handle_api_errors';
 export {
   setSuccessMessage,
   setErrorMessage,
-  setQueuedSuccessMessage,
+  queueSuccessCallout,
   queueErrorCallout,
   flashSuccessToast,
   flashErrorToast,

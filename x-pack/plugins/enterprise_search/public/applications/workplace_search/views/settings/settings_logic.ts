@@ -11,7 +11,7 @@ import { i18n } from '@kbn/i18n';
 
 import {
   clearFlashMessages,
-  setQueuedSuccessMessage,
+  queueSuccessCallout,
   setSuccessMessage,
   flashAPIErrors,
 } from '../../../shared/flash_messages';
@@ -182,7 +182,7 @@ export const SettingsLogic = kea<MakeLogicType<SettingsValues, SettingsActions>>
       try {
         await http.delete(route);
         KibanaLogic.values.navigateToUrl(ORG_SETTINGS_CONNECTORS_PATH);
-        setQueuedSuccessMessage(
+        queueSuccessCallout(
           i18n.translate('xpack.enterpriseSearch.workplaceSearch.settings.configRemoved.message', {
             defaultMessage: 'Successfully removed configuration for {name}.',
             values: { name },
