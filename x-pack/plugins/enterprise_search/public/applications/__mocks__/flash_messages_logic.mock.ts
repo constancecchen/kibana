@@ -22,7 +22,7 @@ export const mockFlashMessageHelpers = {
   setSuccessMessage: jest.fn(),
   setErrorMessage: jest.fn(),
   setQueuedSuccessMessage: jest.fn(),
-  setQueuedErrorMessage: jest.fn(),
+  queueErrorCallout: jest.fn(),
   clearFlashMessages: jest.fn(),
   flashSuccessToast: jest.fn(),
   flashErrorToast: jest.fn(),

@@ -30,7 +30,7 @@ export const setQueuedSuccessMessage = (message: string) => {
   });
 };
 
-export const setQueuedErrorMessage = (message: string) => {
+export const queueErrorCallout = (message: string) => {
   FlashMessagesLogic.actions.setQueuedMessages({
     type: 'error',
     message,

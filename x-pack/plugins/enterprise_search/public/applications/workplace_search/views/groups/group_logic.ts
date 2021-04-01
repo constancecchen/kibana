@@ -15,7 +15,7 @@ import {
   flashAPIErrors,
   setSuccessMessage,
   setQueuedSuccessMessage,
-  setQueuedErrorMessage,
+  queueErrorCallout,
 } from '../../../shared/flash_messages';
 import { HttpLogic } from '../../../shared/http';
 import { KibanaLogic } from '../../../shared/kibana';
@@ -224,7 +224,7 @@ export const GroupLogic = kea<MakeLogicType<GroupValues, GroupActions>>({
         );
 
         const error = e.response?.status === 404 ? NOT_FOUND_MESSAGE : e;
-        setQueuedErrorMessage(error);
+        queueErrorCallout(error);
 
         KibanaLogic.values.navigateToUrl(GROUPS_PATH);
       }

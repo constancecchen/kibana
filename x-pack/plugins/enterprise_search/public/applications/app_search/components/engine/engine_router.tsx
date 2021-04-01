@@ -12,7 +12,7 @@ import { useValues, useActions } from 'kea';
 
 import { i18n } from '@kbn/i18n';
 
-import { setQueuedErrorMessage } from '../../../shared/flash_messages';
+import { queueErrorCallout } from '../../../shared/flash_messages';
 import { SetAppSearchChrome as SetPageChrome } from '../../../shared/kibana_chrome';
 import { Loading } from '../../../shared/loading';
 import { AppLogic } from '../../app_logic';
@@ -74,7 +74,7 @@ export const EngineRouter: React.FC = () => {
   }, [engineNameFromUrl]);
 
   if (engineNotFound) {
-    setQueuedErrorMessage(
+    queueErrorCallout(
       i18n.translate('xpack.enterpriseSearch.appSearch.engine.notFound', {
         defaultMessage: "No engine with name '{engineName}' could be found.",
         values: { engineName },

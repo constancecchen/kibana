@@ -13,7 +13,7 @@ export {
   setSuccessMessage,
   setErrorMessage,
   setQueuedSuccessMessage,
-  setQueuedErrorMessage,
+  queueErrorCallout,
   flashSuccessToast,
   flashErrorToast,
   clearFlashMessages,

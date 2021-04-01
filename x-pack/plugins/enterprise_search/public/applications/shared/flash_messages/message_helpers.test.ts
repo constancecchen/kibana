@@ -12,7 +12,7 @@ import {
   setSuccessMessage,
   setErrorMessage,
   setQueuedSuccessMessage,
-  setQueuedErrorMessage,
+  queueErrorCallout,
   clearFlashMessages,
   flashSuccessToast,
   flashErrorToast,
@@ -66,8 +66,8 @@ describe('Flash Message Helpers', () => {
         ]);
       });
 
-      it('setQueuedErrorMessage', () => {
-        setQueuedErrorMessage(message);
+      it('queueErrorCallout', () => {
+        queueErrorCallout(message);
 
         expect(FlashMessagesLogic.values.queuedMessages).toEqual([
           {

@@ -29,7 +29,7 @@ describe('GroupLogic', () => {
     flashAPIErrors,
     setSuccessMessage,
     setQueuedSuccessMessage,
-    setQueuedErrorMessage,
+    queueErrorCallout,
   } = mockFlashMessageHelpers;
 
   const group = groups[0];
@@ -246,7 +246,7 @@ describe('GroupLogic', () => {
         await nextTick();
 
         expect(navigateToUrl).toHaveBeenCalledWith(GROUPS_PATH);
-        expect(setQueuedErrorMessage).toHaveBeenCalledWith('Unable to find group with ID: "123".');
+        expect(queueErrorCallout).toHaveBeenCalledWith('Unable to find group with ID: "123".');
       });
 
       it('handles non-404 error', async () => {
@@ -256,7 +256,7 @@ describe('GroupLogic', () => {
         await nextTick();
 
         expect(navigateToUrl).toHaveBeenCalledWith(GROUPS_PATH);
-        expect(setQueuedErrorMessage).toHaveBeenCalledWith('this is an error');
+        expect(queueErrorCallout).toHaveBeenCalledWith('this is an error');
       });
     });
 

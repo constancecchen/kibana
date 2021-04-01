@@ -60,12 +60,12 @@ describe('EngineRouter', () => {
   });
 
   it('redirects to engines list and flashes an error if the engine param was not found', () => {
-    const { setQueuedErrorMessage } = mockFlashMessageHelpers;
+    const { queueErrorCallout } = mockFlashMessageHelpers;
     setMockValues({ ...values, engineNotFound: true, engineName: '404-engine' });
     const wrapper = shallow(<EngineRouter />);
 
     expect(wrapper.find(Redirect).prop('to')).toEqual('/engines');
-    expect(setQueuedErrorMessage).toHaveBeenCalledWith(
+    expect(queueErrorCallout).toHaveBeenCalledWith(
       "No engine with name '404-engine' could be found."
     );
   });
