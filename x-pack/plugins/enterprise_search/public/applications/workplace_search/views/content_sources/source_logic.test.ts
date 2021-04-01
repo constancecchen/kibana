@@ -31,7 +31,7 @@ describe('SourceLogic', () => {
   const {
     clearFlashMessages,
     flashAPIErrors,
-    setSuccessMessage,
+    flashSuccessCallout,
     queueSuccessCallout,
   } = mockFlashMessageHelpers;
   const { navigateToUrl } = mockKibanaValues;
@@ -80,7 +80,7 @@ describe('SourceLogic', () => {
         ...contentSource,
         name: NAME,
       });
-      expect(setSuccessMessage).toHaveBeenCalled();
+      expect(flashSuccessCallout).toHaveBeenCalled();
     });
 
     it('setSearchResults', () => {

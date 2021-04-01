@@ -225,7 +225,7 @@ describe('RelevanceTuningLogic', () => {
 
   describe('listeners', () => {
     const { http } = mockHttpValues;
-    const { flashAPIErrors, setSuccessMessage, clearFlashMessages } = mockFlashMessageHelpers;
+    const { flashAPIErrors, flashSuccessCallout, clearFlashMessages } = mockFlashMessageHelpers;
     let scrollToSpy: jest.SpyInstance;
     let confirmSpy: jest.SpyInstance;
 
@@ -517,7 +517,7 @@ describe('RelevanceTuningLogic', () => {
             body: JSON.stringify(searchSettingsWithoutNewBoostProp),
           }
         );
-        expect(setSuccessMessage).toHaveBeenCalledWith(
+        expect(flashSuccessCallout).toHaveBeenCalledWith(
           'Relevance successfully tuned. The changes will impact your results shortly.'
         );
         expect(RelevanceTuningLogic.actions.onSearchSettingsSuccess).toHaveBeenCalledWith(
@@ -573,7 +573,7 @@ describe('RelevanceTuningLogic', () => {
         expect(http.post).toHaveBeenCalledWith(
           '/api/app_search/engines/test-engine/search_settings/reset'
         );
-        expect(setSuccessMessage).toHaveBeenCalledWith(
+        expect(flashSuccessCallout).toHaveBeenCalledWith(
           'Relevance has been reset to default values. The change will impact your results shortly.'
         );
         expect(RelevanceTuningLogic.actions.onSearchSettingsSuccess).toHaveBeenCalledWith(

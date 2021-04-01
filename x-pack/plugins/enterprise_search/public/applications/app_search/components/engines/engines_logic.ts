@@ -9,7 +9,7 @@ import { kea, MakeLogicType } from 'kea';
 
 import { Meta } from '../../../../../common/types';
 import { DEFAULT_META } from '../../../shared/constants';
-import { flashAPIErrors, setSuccessMessage } from '../../../shared/flash_messages';
+import { flashAPIErrors, flashSuccessCallout } from '../../../shared/flash_messages';
 import { HttpLogic } from '../../../shared/http';
 import { updateMetaPageIndex } from '../../../shared/table_pagination';
 
@@ -144,7 +144,7 @@ export const EnginesLogic = kea<MakeLogicType<EnginesValues, EnginesActions>>({
       actions.onMetaEnginesLoad(response);
     },
     onDeleteEngineSuccess: async ({ engine }) => {
-      setSuccessMessage(DELETE_ENGINE_MESSAGE(engine.name));
+      flashSuccessCallout(DELETE_ENGINE_MESSAGE(engine.name));
       if ([EngineTypes.default, EngineTypes.indexed].includes(engine.type)) {
         actions.loadEngines();
       } else if (engine.type === EngineTypes.meta) {

@@ -25,7 +25,7 @@ import { DisplaySettingsLogic, defaultSearchResultConfig } from './display_setti
 
 describe('DisplaySettingsLogic', () => {
   const { http } = mockHttpValues;
-  const { clearFlashMessages, flashAPIErrors, setSuccessMessage } = mockFlashMessageHelpers;
+  const { clearFlashMessages, flashAPIErrors, flashSuccessCallout } = mockFlashMessageHelpers;
   const { mount } = new LogicMounter(DisplaySettingsLogic);
 
   const { searchResultConfig, exampleDocuments } = exampleResult;
@@ -99,7 +99,7 @@ describe('DisplaySettingsLogic', () => {
         serverProps.searchResultConfig
       );
 
-      expect(setSuccessMessage).toHaveBeenCalled();
+      expect(flashSuccessCallout).toHaveBeenCalled();
     });
 
     it('handles empty color', () => {

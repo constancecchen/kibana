@@ -9,7 +9,7 @@ import { FLASH_MESSAGE_TYPES } from './constants';
 import { FlashMessagesLogic } from './flash_messages_logic';
 import { ToastOptions } from './types';
 
-export const setSuccessMessage = (message: string) => {
+export const flashSuccessCallout = (message: string) => {
   FlashMessagesLogic.actions.setFlashMessages({
     type: 'success',
     message,

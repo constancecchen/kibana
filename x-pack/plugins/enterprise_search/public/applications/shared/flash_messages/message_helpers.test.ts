@@ -9,7 +9,7 @@ import '../../__mocks__/kibana_logic.mock';
 
 import { FlashMessagesLogic } from './flash_messages_logic';
 import {
-  setSuccessMessage,
+  flashSuccessCallout,
   flashErrorCallout,
   queueSuccessCallout,
   queueErrorCallout,
@@ -26,8 +26,8 @@ describe('Flash Message Helpers', () => {
   });
 
   describe('callout helpers', () => {
-    it('setSuccessMessage', () => {
-      setSuccessMessage(message);
+    it('flashSuccessCallout', () => {
+      flashSuccessCallout(message);
 
       expect(FlashMessagesLogic.values.messages).toEqual([
         {

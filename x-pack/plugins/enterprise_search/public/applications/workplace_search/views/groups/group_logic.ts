@@ -13,7 +13,7 @@ import { i18n } from '@kbn/i18n';
 import {
   clearFlashMessages,
   flashAPIErrors,
-  setSuccessMessage,
+  flashSuccessCallout,
   queueSuccessCallout,
   queueErrorCallout,
 } from '../../../shared/flash_messages';
@@ -268,7 +268,7 @@ export const GroupLogic = kea<MakeLogicType<GroupValues, GroupActions>>({
             values: { groupName: response.name },
           }
         );
-        setSuccessMessage(GROUP_RENAMED_MESSAGE);
+        flashSuccessCallout(GROUP_RENAMED_MESSAGE);
       } catch (e) {
         flashAPIErrors(e);
       }
@@ -293,7 +293,7 @@ export const GroupLogic = kea<MakeLogicType<GroupValues, GroupActions>>({
             defaultMessage: 'Successfully updated shared content sources.',
           }
         );
-        setSuccessMessage(GROUP_SOURCES_UPDATED_MESSAGE);
+        flashSuccessCallout(GROUP_SOURCES_UPDATED_MESSAGE);
       } catch (e) {
         flashAPIErrors(e);
       }
@@ -318,7 +318,7 @@ export const GroupLogic = kea<MakeLogicType<GroupValues, GroupActions>>({
             defaultMessage: 'Successfully updated the users of this group.',
           }
         );
-        setSuccessMessage(GROUP_USERS_UPDATED_MESSAGE);
+        flashSuccessCallout(GROUP_USERS_UPDATED_MESSAGE);
       } catch (e) {
         flashAPIErrors(e);
       }
@@ -351,7 +351,7 @@ export const GroupLogic = kea<MakeLogicType<GroupValues, GroupActions>>({
           }
         );
 
-        setSuccessMessage(GROUP_PRIORITIZATION_UPDATED_MESSAGE);
+        flashSuccessCallout(GROUP_PRIORITIZATION_UPDATED_MESSAGE);
         actions.onGroupPrioritiesChanged(response);
       } catch (e) {
         flashAPIErrors(e);

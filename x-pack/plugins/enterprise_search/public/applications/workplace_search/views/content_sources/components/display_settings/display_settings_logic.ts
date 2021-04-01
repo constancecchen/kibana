@@ -11,7 +11,7 @@ import { kea, MakeLogicType } from 'kea';
 import { cloneDeep, isEqual, differenceBy } from 'lodash';
 
 import {
-  setSuccessMessage,
+  flashSuccessCallout,
   clearFlashMessages,
   flashAPIErrors,
 } from '../../../../../shared/flash_messages';
@@ -325,7 +325,7 @@ export const DisplaySettingsLogic = kea<
       }
     },
     setServerResponseData: () => {
-      setSuccessMessage(SUCCESS_MESSAGE);
+      flashSuccessCallout(SUCCESS_MESSAGE);
     },
     toggleFieldEditorModal: () => {
       clearFlashMessages();

@@ -14,7 +14,7 @@ import { TEXT } from '../../../../../shared/constants/field_types';
 import { ADD, UPDATE } from '../../../../../shared/constants/operations';
 import {
   flashAPIErrors,
-  setSuccessMessage,
+  flashSuccessCallout,
   flashErrorCallout,
   clearFlashMessages,
 } from '../../../../../shared/flash_messages';
@@ -349,7 +349,7 @@ export const SchemaLogic = kea<MakeLogicType<SchemaValues, SchemaActions>>({
           body: JSON.stringify({ ...updatedSchema }),
         });
         actions.onSchemaSetSuccess(response);
-        setSuccessMessage(successMessage);
+        flashSuccessCallout(successMessage);
       } catch (e) {
         window.scrollTo(0, 0);
         if (isAdding) {

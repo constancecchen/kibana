@@ -27,7 +27,7 @@ import { CredentialsLogic } from './credentials_logic';
 describe('CredentialsLogic', () => {
   const { mount } = new LogicMounter(CredentialsLogic);
   const { http } = mockHttpValues;
-  const { clearFlashMessages, setSuccessMessage, flashAPIErrors } = mockFlashMessageHelpers;
+  const { clearFlashMessages, flashSuccessCallout, flashAPIErrors } = mockFlashMessageHelpers;
 
   const DEFAULT_VALUES = {
     activeApiToken: {
@@ -1106,7 +1106,7 @@ describe('CredentialsLogic', () => {
         await nextTick();
 
         expect(CredentialsLogic.actions.fetchCredentials).toHaveBeenCalled();
-        expect(setSuccessMessage).toHaveBeenCalled();
+        expect(flashSuccessCallout).toHaveBeenCalled();
       });
 
       it('handles errors', async () => {
@@ -1138,7 +1138,7 @@ describe('CredentialsLogic', () => {
         });
         await nextTick();
         expect(CredentialsLogic.actions.onApiTokenCreateSuccess).toHaveBeenCalledWith(createdToken);
-        expect(setSuccessMessage).toHaveBeenCalled();
+        expect(flashSuccessCallout).toHaveBeenCalled();
       });
 
       it('calls a PUT endpoint that updates the active token if it already exists', async () => {
@@ -1165,7 +1165,7 @@ describe('CredentialsLogic', () => {
         });
         await nextTick();
         expect(CredentialsLogic.actions.onApiTokenUpdateSuccess).toHaveBeenCalledWith(updatedToken);
-        expect(setSuccessMessage).toHaveBeenCalled();
+        expect(flashSuccessCallout).toHaveBeenCalled();
       });
 
       it('handles errors', async () => {

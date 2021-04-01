@@ -12,7 +12,7 @@ import { i18n } from '@kbn/i18n';
 import { DEFAULT_META } from '../../../shared/constants';
 import {
   flashAPIErrors,
-  setSuccessMessage,
+  flashSuccessCallout,
   queueSuccessCallout,
   clearFlashMessages,
 } from '../../../shared/flash_messages';
@@ -227,7 +227,7 @@ export const SourceLogic = kea<MakeLogicType<SourceValues, SourceActions>>({
       }
     },
     onUpdateSourceName: (name: string) => {
-      setSuccessMessage(
+      flashSuccessCallout(
         i18n.translate(
           'xpack.enterpriseSearch.workplaceSearch.sources.flashMessages.contentSourceNameChanged',
           {

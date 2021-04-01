@@ -20,7 +20,7 @@ import { RoleMappingsLogic } from './role_mappings_logic';
 describe('RoleMappingsLogic', () => {
   const { http } = mockHttpValues;
   const { navigateToUrl } = mockKibanaValues;
-  const { clearFlashMessages, flashAPIErrors, setSuccessMessage } = mockFlashMessageHelpers;
+  const { clearFlashMessages, flashAPIErrors, flashSuccessCallout } = mockFlashMessageHelpers;
   const { mount } = new LogicMounter(RoleMappingsLogic);
   const DEFAULT_VALUES = {
     attributes: [],
@@ -369,7 +369,7 @@ describe('RoleMappingsLogic', () => {
         await nextTick();
 
         expect(navigateToUrl).toHaveBeenCalled();
-        expect(setSuccessMessage).toHaveBeenCalled();
+        expect(flashSuccessCallout).toHaveBeenCalled();
       });
 
       it('sends array when "accessAllEngines" is false', () => {
@@ -431,7 +431,7 @@ describe('RoleMappingsLogic', () => {
         await nextTick();
 
         expect(navigateToUrl).toHaveBeenCalled();
-        expect(setSuccessMessage).toHaveBeenCalled();
+        expect(flashSuccessCallout).toHaveBeenCalled();
       });
 
       it('handles error', async () => {

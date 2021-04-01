@@ -19,7 +19,7 @@ export const mockFlashMessagesActions = {
 
 export const mockFlashMessageHelpers = {
   flashAPIErrors: jest.fn(),
-  setSuccessMessage: jest.fn(),
+  flashSuccessCallout: jest.fn(),
   flashErrorCallout: jest.fn(),
   queueSuccessCallout: jest.fn(),
   queueErrorCallout: jest.fn(),

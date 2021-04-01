@@ -10,7 +10,7 @@ export { FlashMessagesLogic, mountFlashMessagesLogic } from './flash_messages_lo
 export { IFlashMessage } from './types';
 export { flashAPIErrors } from './handle_api_errors';
 export {
-  setSuccessMessage,
+  flashSuccessCallout,
   flashErrorCallout,
   queueSuccessCallout,
   queueErrorCallout,
