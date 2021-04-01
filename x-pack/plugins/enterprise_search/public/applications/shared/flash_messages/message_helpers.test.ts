@@ -10,7 +10,7 @@ import '../../__mocks__/kibana_logic.mock';
 import { FlashMessagesLogic } from './flash_messages_logic';
 import {
   setSuccessMessage,
-  setErrorMessage,
+  flashErrorCallout,
   queueSuccessCallout,
   queueErrorCallout,
   clearFlashMessages,
@@ -37,8 +37,8 @@ describe('Flash Message Helpers', () => {
       ]);
     });
 
-    it('setErrorMessage', () => {
-      setErrorMessage(message);
+    it('flashErrorCallout', () => {
+      flashErrorCallout(message);
 
       expect(FlashMessagesLogic.values.messages).toEqual([
         {

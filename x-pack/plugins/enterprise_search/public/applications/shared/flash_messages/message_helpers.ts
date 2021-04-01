@@ -16,7 +16,7 @@ export const setSuccessMessage = (message: string) => {
   });
 };
 
-export const setErrorMessage = (message: string) => {
+export const flashErrorCallout = (message: string) => {
   FlashMessagesLogic.actions.setFlashMessages({
     type: 'error',
     message,

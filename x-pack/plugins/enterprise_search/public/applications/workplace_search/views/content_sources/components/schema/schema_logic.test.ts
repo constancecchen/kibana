@@ -39,7 +39,7 @@ describe('SchemaLogic', () => {
     clearFlashMessages,
     flashAPIErrors,
     setSuccessMessage,
-    setErrorMessage,
+    flashErrorCallout,
   } = mockFlashMessageHelpers;
   const { mount } = new LogicMounter(SchemaLogic);
 
@@ -303,7 +303,7 @@ describe('SchemaLogic', () => {
         );
         await nextTick();
 
-        expect(setErrorMessage).toHaveBeenCalledWith(SCHEMA_FIELD_ERRORS_ERROR_MESSAGE);
+        expect(flashErrorCallout).toHaveBeenCalledWith(SCHEMA_FIELD_ERRORS_ERROR_MESSAGE);
       });
     });
 
@@ -324,7 +324,7 @@ describe('SchemaLogic', () => {
         SchemaLogic.actions.onInitializeSchema(serverResponse);
         SchemaLogic.actions.addNewField('foo', 'number');
 
-        expect(setErrorMessage).toHaveBeenCalledWith('New field already exists: foo.');
+        expect(flashErrorCallout).toHaveBeenCalledWith('New field already exists: foo.');
       });
     });
 

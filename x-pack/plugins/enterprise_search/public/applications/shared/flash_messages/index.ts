@@ -11,7 +11,7 @@ export { IFlashMessage } from './types';
 export { flashAPIErrors } from './handle_api_errors';
 export {
   setSuccessMessage,
-  setErrorMessage,
+  flashErrorCallout,
   queueSuccessCallout,
   queueErrorCallout,
   flashSuccessToast,

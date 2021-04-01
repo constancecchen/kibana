@@ -15,7 +15,7 @@ import { ADD, UPDATE } from '../../../../../shared/constants/operations';
 import {
   flashAPIErrors,
   setSuccessMessage,
-  setErrorMessage,
+  flashErrorCallout,
   clearFlashMessages,
 } from '../../../../../shared/flash_messages';
 import { HttpLogic } from '../../../../../shared/http';
@@ -298,13 +298,13 @@ export const SchemaLogic = kea<MakeLogicType<SchemaValues, SchemaActions>>({
           fieldCoercionErrors: response.fieldCoercionErrors,
         });
       } catch (e) {
-        setErrorMessage(SCHEMA_FIELD_ERRORS_ERROR_MESSAGE);
+        flashErrorCallout(SCHEMA_FIELD_ERRORS_ERROR_MESSAGE);
       }
     },
     addNewField: ({ fieldName, newFieldType }) => {
       if (fieldName in values.activeSchema) {
         window.scrollTo(0, 0);
-        setErrorMessage(
+        flashErrorCallout(
           i18n.translate(
             'xpack.enterpriseSearch.workplaceSearch.contentSource.schema.newFieldExists.message',
             {
