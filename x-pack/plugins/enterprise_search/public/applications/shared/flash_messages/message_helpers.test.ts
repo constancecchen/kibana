@@ -25,54 +25,58 @@ describe('Flash Message Helpers', () => {
     FlashMessagesLogic.mount();
   });
 
-  it('setSuccessMessage()', () => {
-    setSuccessMessage(message);
+  describe('callout helpers', () => {
+    it('setSuccessMessage', () => {
+      setSuccessMessage(message);
 
-    expect(FlashMessagesLogic.values.messages).toEqual([
-      {
-        message,
-        type: 'success',
-      },
-    ]);
-  });
+      expect(FlashMessagesLogic.values.messages).toEqual([
+        {
+          message,
+          type: 'success',
+        },
+      ]);
+    });
 
-  it('setErrorMessage()', () => {
-    setErrorMessage(message);
+    it('setErrorMessage', () => {
+      setErrorMessage(message);
 
-    expect(FlashMessagesLogic.values.messages).toEqual([
-      {
-        message,
-        type: 'error',
-      },
-    ]);
-  });
+      expect(FlashMessagesLogic.values.messages).toEqual([
+        {
+          message,
+          type: 'error',
+        },
+      ]);
+    });
 
-  it('setQueuedSuccessMessage()', () => {
-    setQueuedSuccessMessage(message);
+    it('clearFlashMessages', () => {
+      clearFlashMessages();
 
-    expect(FlashMessagesLogic.values.queuedMessages).toEqual([
-      {
-        message,
-        type: 'success',
-      },
-    ]);
-  });
+      expect(FlashMessagesLogic.values.messages).toEqual([]);
+    });
 
-  it('setQueuedErrorMessage()', () => {
-    setQueuedErrorMessage(message);
+    describe('queued callouts', () => {
+      it('setQueuedSuccessMessage', () => {
+        setQueuedSuccessMessage(message);
 
-    expect(FlashMessagesLogic.values.queuedMessages).toEqual([
-      {
-        message,
-        type: 'error',
-      },
-    ]);
-  });
+        expect(FlashMessagesLogic.values.queuedMessages).toEqual([
+          {
+            message,
+            type: 'success',
+          },
+        ]);
+      });
 
-  it('clearFlashMessages()', () => {
-    clearFlashMessages();
+      it('setQueuedErrorMessage', () => {
+        setQueuedErrorMessage(message);
 
-    expect(FlashMessagesLogic.values.messages).toEqual([]);
+        expect(FlashMessagesLogic.values.queuedMessages).toEqual([
+          {
+            message,
+            type: 'error',
+          },
+        ]);
+      });
+    });
   });
 
   describe('toast helpers', () => {
