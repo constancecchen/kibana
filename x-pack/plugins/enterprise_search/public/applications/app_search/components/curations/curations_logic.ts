@@ -11,7 +11,7 @@ import { Meta } from '../../../../../common/types';
 import { DEFAULT_META } from '../../../shared/constants';
 import {
   clearFlashMessages,
-  flashSuccessCallout,
+  flashSuccessToast,
   flashAPIErrors,
 } from '../../../shared/flash_messages';
 import { HttpLogic } from '../../../shared/http';
@@ -20,7 +20,7 @@ import { updateMetaPageIndex } from '../../../shared/table_pagination';
 import { ENGINE_CURATION_PATH } from '../../routes';
 import { EngineLogic, generateEnginePath } from '../engine';
 
-import { DELETE_MESSAGE, SUCCESS_MESSAGE } from './constants';
+import { DELETE_PROMPT_MESSAGE, DELETE_MESSAGE, CREATE_MESSAGE } from './constants';
 import { Curation, CurationsAPIResponse } from './types';
 
 interface CurationsValues {
@@ -91,11 +91,11 @@ export const CurationsLogic = kea<MakeLogicType<CurationsValues, CurationsAction
       const { engineName } = EngineLogic.values;
       clearFlashMessages();
 
-      if (window.confirm(DELETE_MESSAGE)) {
+      if (window.confirm(DELETE_PROMPT_MESSAGE)) {
         try {
           await http.delete(`/api/app_search/engines/${engineName}/curations/${id}`);
           actions.loadCurations();
-          flashSuccessCallout(SUCCESS_MESSAGE);
+          flashSuccessToast(DELETE_MESSAGE);
         } catch (e) {
           flashAPIErrors(e);
         }
@@ -111,6 +111,7 @@ export const CurationsLogic = kea<MakeLogicType<CurationsValues, CurationsAction
         const response = await http.post(`/api/app_search/engines/${engineName}/curations`, {
           body: JSON.stringify({ queries }),
         });
+        flashSuccessToast(CREATE_MESSAGE);
         navigateToUrl(generateEnginePath(ENGINE_CURATION_PATH, { curationId: response.id }));
       } catch (e) {
         flashAPIErrors(e);

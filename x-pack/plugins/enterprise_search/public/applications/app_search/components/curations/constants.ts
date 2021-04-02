@@ -24,13 +24,17 @@ export const MANAGE_CURATION_TITLE = i18n.translate(
   { defaultMessage: 'Manage curation' }
 );
 
-export const DELETE_MESSAGE = i18n.translate(
+export const DELETE_PROMPT_MESSAGE = i18n.translate(
   'xpack.enterpriseSearch.appSearch.engine.curations.deleteConfirmation',
   { defaultMessage: 'Are you sure you want to remove this curation?' }
 );
-export const SUCCESS_MESSAGE = i18n.translate(
+export const DELETE_MESSAGE = i18n.translate(
   'xpack.enterpriseSearch.appSearch.engine.curations.deleteSuccessMessage',
-  { defaultMessage: 'Successfully removed curation.' }
+  { defaultMessage: 'Curation removed' }
+);
+export const CREATE_MESSAGE = i18n.translate(
+  'xpack.enterpriseSearch.appSearch.engine.curations.createSuccessMessage',
+  { defaultMessage: 'Curation created' }
 );
 export const RESTORE_CONFIRMATION = i18n.translate(
   'xpack.enterpriseSearch.appSearch.engine.curations.restoreConfirmation',
