@@ -6,6 +6,7 @@
  */
 
 import { chartPluginMock } from '../../../../../../../src/plugins/charts/public/mocks';
+import { dataPluginMock } from '../../../../../../../src/plugins/data/public/mocks';
 
 import { securityMock } from '../../../../../security/public/mocks';
 
@@ -18,6 +19,7 @@ export const mockKibanaValues = {
     isCloudEnabled: false,
     deployment_url: 'https://cloud.elastic.co/deployments/some-id',
   },
+  data: dataPluginMock.createStartContract(),
   history: mockHistory,
   navigateToUrl: jest.fn(),
   security: securityMock.createStart(),

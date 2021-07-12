@@ -11,6 +11,7 @@ import { getContext } from 'kea';
 
 import { coreMock } from '../../../../../src/core/public/mocks';
 import { chartPluginMock } from '../../../../../src/plugins/charts/public/mocks';
+import { dataPluginMock } from '../../../../../src/plugins/data/public/mocks';
 import { licensingMock } from '../../../licensing/public/mocks';
 import { securityMock } from '../../../security/public/mocks';
 
@@ -28,6 +29,7 @@ describe('renderApp', () => {
     plugins: {
       licensing: licensingMock.createStart(),
       charts: chartPluginMock.createStartContract(),
+      data: dataPluginMock.createStartContract(),
       security: securityMock.createStart(),
     },
   } as any;

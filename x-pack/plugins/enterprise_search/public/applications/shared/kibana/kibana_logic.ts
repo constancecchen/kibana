@@ -12,6 +12,7 @@ import { kea, MakeLogicType } from 'kea';
 
 import { ApplicationStart, ChromeBreadcrumb } from '../../../../../../../src/core/public';
 import { ChartsPluginStart } from '../../../../../../../src/plugins/charts/public';
+import { DataPublicPluginStart } from '../../../../../../../src/plugins/data/public';
 import { CloudSetup } from '../../../../../cloud/public';
 import { SecurityPluginStart } from '../../../../../security/public';
 
@@ -29,6 +30,7 @@ interface KibanaLogicProps {
   renderHeaderActions(HeaderActions: FC): void;
   // Required plugins
   charts: ChartsPluginStart;
+  data: DataPublicPluginStart;
   // Optional plugins
   cloud?: CloudSetup;
   security?: SecurityPluginStart;
@@ -45,6 +47,7 @@ export const KibanaLogic = kea<MakeLogicType<KibanaValues>>({
     config: [props.config || {}, {}],
     charts: [props.charts, {}],
     cloud: [props.cloud || {}, {}],
+    data: [props.data, {}],
     history: [props.history, {}],
     navigateToUrl: [
       (url: string, options?: CreateHrefOptions) => {
