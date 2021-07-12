@@ -27,6 +27,7 @@ import { NotFound } from './components/not_found';
 import { RoleMappings } from './components/role_mappings';
 import { Settings } from './components/settings';
 import { SetupGuide } from './components/setup_guide';
+import { Test } from './components/test';
 import {
   ENGINE_CREATION_PATH,
   ROOT_PATH,
@@ -93,6 +94,9 @@ export const AppSearchConfigured: React.FC<Required<InitialAppData>> = (props) =
           <Library />
         </Route>
       )}
+      <Route exact path="/test">
+        <Test />
+      </Route>
       <Route exact path={ROOT_PATH}>
         <Redirect to={ENGINES_PATH} />
       </Route>
